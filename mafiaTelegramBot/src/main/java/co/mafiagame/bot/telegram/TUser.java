@@ -26,18 +26,18 @@ import org.springframework.util.StringUtils;
  * @author Esa Hekmatizadeh
  */
 public class TUser {
-    private Integer id;
+    private Long id;
     @JsonProperty("first_name")
     private String firstName;
     @JsonProperty("last_name")
     private String lastName;
     private String username;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

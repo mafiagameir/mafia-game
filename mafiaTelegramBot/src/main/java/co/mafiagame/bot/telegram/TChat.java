@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author hekmatof
  */
 public class TChat {
-    private Integer id;
+    private Long id;
     private String type;
     private String title;
     private String username;
@@ -35,11 +35,11 @@ public class TChat {
     @JsonProperty("all_members_are_administrators")
     private String allMembersAreAdmins;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
