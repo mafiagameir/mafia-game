@@ -48,7 +48,7 @@ public abstract class TelegramCommandHandler {
     @PostConstruct
     protected final void init() {
         getCommandString().forEach(command ->
-                commandDispatcher.registerCommandHandler(command, this));
+                commandDispatcher.registerCommandHandler(command.toLowerCase(), this));
     }
 
     protected abstract Collection<String> getCommandString();
