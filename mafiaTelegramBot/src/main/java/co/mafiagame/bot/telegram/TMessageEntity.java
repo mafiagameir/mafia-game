@@ -23,8 +23,8 @@ package co.mafiagame.bot.telegram;
  */
 public class TMessageEntity {
     private String type;
-    private Integer offset;
-    private Integer length;
+    private Long offset;
+    private Long length;
     private String url;
     private TUser user;
 
@@ -36,19 +36,19 @@ public class TMessageEntity {
         this.type = type;
     }
 
-    public Integer getOffset() {
+    public Long getOffset() {
         return offset;
     }
 
-    public void setOffset(Integer offset) {
+    public void setOffset(Long offset) {
         this.offset = offset;
     }
 
-    public Integer getLength() {
+    public Long getLength() {
         return length;
     }
 
-    public void setLength(Integer length) {
+    public void setLength(Long length) {
         this.length = length;
     }
 

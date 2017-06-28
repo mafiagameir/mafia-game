@@ -7,26 +7,26 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class EditMessageReplyMarkupRequest {
     @JsonProperty("chat_id")
-    private Integer chatId;
+    private Long chatId;
     @JsonProperty("message_id")
-    private Integer messageId;
+    private Long messageId;
     @JsonProperty("reply_markup")
     private TInlineKeyboardMarkup replyMarkup;
 
-    public Integer getChatId() {
+    public Long getChatId() {
         return chatId;
     }
 
-    public EditMessageReplyMarkupRequest setChatId(Integer chatId) {
+    public EditMessageReplyMarkupRequest setChatId(Long chatId) {
         this.chatId = chatId;
         return this;
     }
 
-    public Integer getMessageId() {
+    public Long getMessageId() {
         return messageId;
     }
 
-    public EditMessageReplyMarkupRequest setMessageId(Integer messageId) {
+    public EditMessageReplyMarkupRequest setMessageId(Long messageId) {
         this.messageId = messageId;
         return this;
     }

@@ -65,21 +65,21 @@ public final class BotConfiguration {
     }
 
     private void mafiaTurn(Game game) {
-        Room room = gameContainer.room(Integer.valueOf(game.getGameId()));
+        Room room = gameContainer.room(Long.valueOf(game.getGameId()));
         client.send(new SendMessage()
                 .setChatId(room.getRoomId())
                 .setText(MessageHolder.get("night.started.be.silent", room.getLang()))
         );
         room.getGame().mafias().stream()
                 .map(Player::getUserId)
-                .map(Integer::valueOf)
+                .map(Long::valueOf)
                 .forEach(id ->
                         client.send(new SendMessageWithInlineKeyboard()
                                 .setReplyMarkup(new TInlineKeyboardMarkup()
                                         .addOptions(
                                                 room.getGame().alivePlayer().stream()
                                                         .map(Player::getUserId)
-                                                        .map(Integer::valueOf)
+                                                        .map(Long::valueOf)
                                                         .map(room::findPlayer)
                                                         .map(Optional::get)
                                                         .map(a -> new TInlineKeyboardButton().setText(a.fullName())
@@ -91,50 +91,50 @@ public final class BotConfiguration {
     }
 
     private void detectiveTurn(Game game) {
-        Room room = gameContainer.room(Integer.valueOf(game.getGameId()));
+        Room room = gameContainer.room(Long.valueOf(game.getGameId()));
         Optional<Player> detectivePlayerOpt = game.detective();
         detectivePlayerOpt.ifPresent(detective -> client.send(new SendMessageWithInlineKeyboard()
                 .setReplyMarkup(new TInlineKeyboardMarkup()
                         .addOptions(room.getGame().alivePlayer().stream()
                                 .map(Player::getUserId)
-                                .map(Integer::valueOf)
+                                .map(Long::valueOf)
                                 .map(room::findPlayer)
                                 .map(Optional::get)
                                 .map(a -> new TInlineKeyboardButton().setText(a.fullName())
                                         .setCallbackData("ask " + String.valueOf(a.getTelegramUserId())))
                                 .collect(Collectors.toList())))
-                .setChatId(Integer.valueOf(detective.getUserId()))
+                .setChatId(Long.valueOf(detective.getUserId()))
                 .setText(MessageHolder.get("detective.night.started", room.getLang()))));
     }
 
     private void doctorTurn(Game game) {
-        Room room = gameContainer.room(Integer.valueOf(game.getGameId()));
+        Room room = gameContainer.room(Long.valueOf(game.getGameId()));
         Optional<Player> doctorPlayerOpt = game.doctor();
         doctorPlayerOpt.ifPresent(doctor -> client.send(new SendMessageWithInlineKeyboard()
                 .setReplyMarkup(new TInlineKeyboardMarkup()
                         .addOptions(room.getGame().alivePlayer().stream()
                                 .map(Player::getUserId)
-                                .map(Integer::valueOf)
+                                .map(Long::valueOf)
                                 .map(room::findPlayer)
                                 .map(Optional::get)
                                 .map(a -> new TInlineKeyboardButton().setText(a.fullName())
                                         .setCallbackData("heal " + String.valueOf(a.getTelegramUserId())))
                                 .collect(Collectors.toList())))
-                .setChatId(Integer.valueOf(doctor.getUserId()))
+                .setChatId(Long.valueOf(doctor.getUserId()))
                 .setText(MessageHolder.get("doctor.night.started", room.getLang()))));
     }
 
     private void sunriseHandler(Game game, NightResult nightResult) {
-        Room room = gameContainer.room(Integer.valueOf(game.getGameId()));
+        Room room = gameContainer.room(Long.valueOf(game.getGameId()));
         Player killedPlayer = nightResult.getKilledPlayer();
         String text;
         if (Player.NOBODY.equals(killedPlayer))
             text = MessageHolder.get("nobody.was.killed.last.night", room.getLang());
         else {
             text = MessageHolder.get("user.was.killed.last.night", room.getLang(),
-                    room.findPlayer(Integer.valueOf(killedPlayer.getUserId()))
+                    room.findPlayer(Long.valueOf(killedPlayer.getUserId()))
                             .orElseThrow(IllegalStateException::new).fullName());
-            gameContainer.removeUser(Integer.valueOf(killedPlayer.getUserId()));
+            gameContainer.removeUser(Long.valueOf(killedPlayer.getUserId()));
         }
         client.send(new SendMessage()
                 .setChatId(room.getRoomId())
@@ -143,14 +143,14 @@ public final class BotConfiguration {
     }
 
     private void finishHandler(Game game, GameResult gameResult) {
-        Room room = gameContainer.room(Integer.valueOf(game.getGameId()));
+        Room room = gameContainer.room(Long.valueOf(game.getGameId()));
         String text = gameResult == GameResult.MAFIAS_WIN ?
                 MessageHolder.get("mafia.win", room.getLang()) :
                 MessageHolder.get("citizens.win", room.getLang());
         text += "\n";
         Map<String, Role> roles = game.getGameSetup().getPlayers();
         for (String k : roles.keySet()) {
-            Account ac = room.findPlayer(Integer.valueOf(k)).orElseThrow(IllegalStateException::new);
+            Account ac = room.findPlayer(Long.valueOf(k)).orElseThrow(IllegalStateException::new);
             Role role = roles.get(k);
             text += MessageHolder.get(roleKey(role), room.getLang(), ac.fullName()) + "\n";
         }
@@ -163,9 +163,9 @@ public final class BotConfiguration {
     }
 
     private void clearGame(Game game) {
-        game.getGameSetup().getPlayers().keySet().stream().map(Integer::valueOf)
+        game.getGameSetup().getPlayers().keySet().stream().map(Long::valueOf)
                 .forEach(gameContainer::removeUser);
-        gameContainer.removeRoom(Integer.valueOf(game.getGameId()));
+        gameContainer.removeRoom(Long.valueOf(game.getGameId()));
     }
 
     private static String roleKey(Role role) {

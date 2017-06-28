@@ -25,13 +25,13 @@ import java.util.Map;
  * @author Esa Hekmatizadeh
  */
 public class GameSetup {
-    private final int citizenNo;
-    private final int mafiaNo;
+    private final long citizenNo;
+    private final long mafiaNo;
     private final boolean hasDetective;
     private final boolean hasDoctor;
     private final Map<String, Role> players = new HashMap<>();
 
-    GameSetup(int citizenNo, int mafiaNo, boolean hasDetective, boolean hasDoctor) {
+    GameSetup(long citizenNo, long mafiaNo, boolean hasDetective, boolean hasDoctor) {
         this.citizenNo = citizenNo;
         this.mafiaNo = mafiaNo;
         this.hasDetective = hasDetective;
@@ -49,11 +49,11 @@ public class GameSetup {
         return copy;
     }
 
-    public int getCitizenNo() {
+    public long getCitizenNo() {
         return citizenNo;
     }
 
-    public int getMafiaNo() {
+    public long getMafiaNo() {
         return mafiaNo;
     }
 

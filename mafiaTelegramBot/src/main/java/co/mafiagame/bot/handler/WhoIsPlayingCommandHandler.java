@@ -45,7 +45,7 @@ public class WhoIsPlayingCommandHandler extends TelegramCommandHandler {
 
     @Override
     public void execute(TMessage message) {
-        Integer roomId = gameContainer.roomOfUser(message.getFrom().getId());
+        Long roomId = gameContainer.roomOfUser(message.getFrom().getId());
         if (Objects.isNull(roomId)) {
             sendMessage(message, "game.not.started.yet",
                     getLang(message), false);
@@ -54,7 +54,7 @@ public class WhoIsPlayingCommandHandler extends TelegramCommandHandler {
         Room room = gameContainer.room(roomId);
         client.send(new SendMessage()
                 .setText(room.getGame().alivePlayer().stream()
-                        .map(Player::getUserId).map(Integer::valueOf)
+                        .map(Player::getUserId).map(Long::valueOf)
                         .map(room::findPlayer)
                         .map(Optional::get)
                         .map(Account::fullName)

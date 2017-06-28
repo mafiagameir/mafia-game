@@ -26,8 +26,8 @@ public class KillCommandHandler extends TelegramCallbackHandler {
 
     @Override
     public void execute(TCallBackQuery callBackQuery) {
-        Integer killerId = callBackQuery.getFrom().getId();
-        Integer roomId = gameContainer.roomOfUser(killerId);
+        Long killerId = callBackQuery.getFrom().getId();
+        Long roomId = gameContainer.roomOfUser(killerId);
         if (Objects.isNull(roomId))
             throw new GameNotStartedYetException();
         Room room = gameContainer.room(roomId);
@@ -38,7 +38,7 @@ public class KillCommandHandler extends TelegramCallbackHandler {
                 Collections.singleton(victim)));
         client.editMessageText(new EditMessageTextRequest()
                 .setChatId(callBackQuery.getMessage().getChat().getId())
-                .setMessageId(Integer.valueOf(callBackQuery.getInlineMessageId()))
+                .setMessageId(Long.valueOf(callBackQuery.getInlineMessageId()))
                 .setReplyMarkup(new TInlineKeyboardMarkup().setInlineKeyboard(Collections.emptyList()))
                 .setText(MessageHolder.get("ok", room.getLang()))
         );
@@ -50,9 +50,9 @@ public class KillCommandHandler extends TelegramCallbackHandler {
     }
 
     private void handleFinishElection(Room room, ElectionResult killResult) {
-        Integer victim = Integer.valueOf(killResult.getElects().get(0));
+        Long victim = Long.valueOf(killResult.getElects().get(0));
         room.getGame().mafias().stream().map(Player::getUserId)
-                .map(Integer::valueOf)
+                .map(Long::valueOf)
                 .forEach(id -> client.send(new SendMessage()
                         .setText(MessageHolder.get("mafia.decide.to.kill.player", room.getLang(),
                                 room.findPlayer(victim)
@@ -65,13 +65,13 @@ public class KillCommandHandler extends TelegramCallbackHandler {
 
     private void renewKeyboard(Room room, ElectionResult killResult) {
         room.getGame().mafias().stream().map(Player::getUserId)
-                .map(Integer::valueOf)
+                .map(Long::valueOf)
                 .forEach(id -> client.send(new SendMessageWithInlineKeyboard()
                                 .setReplyMarkup(new TInlineKeyboardMarkup()
                                         .addOptions(
                                                 room.getGame().alivePlayer().stream()
                                                         .map(Player::getUserId)
-                                                        .map(Integer::valueOf)
+                                                        .map(Long::valueOf)
                                                         .map(room::findPlayer)
                                                         .map(Optional::get)
                                                         .map(a -> new TInlineKeyboardButton().setText(a.fullName())
@@ -80,7 +80,7 @@ public class KillCommandHandler extends TelegramCallbackHandler {
                                 .setChatId(id)
                                 .setText(MessageHolder.get("you.cant.decide.who.to.kill",
                                         room.getLang(),
-                                        killResult.getElects().stream().map(Integer::valueOf)
+                                        killResult.getElects().stream().map(Long::valueOf)
                                                 .map(room::findPlayer).map(Optional::get)
                                                 .map(Account::fullName)
                                                 .collect(Collectors.joining(MessageHolder.get("and", room.getLang()))),

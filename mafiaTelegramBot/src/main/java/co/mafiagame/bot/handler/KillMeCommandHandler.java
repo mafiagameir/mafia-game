@@ -42,7 +42,7 @@ public class KillMeCommandHandler extends TelegramCommandHandler {
 
     @Override
     public void execute(TMessage message) {
-        Integer roomId = gameContainer.roomOfUser(message.getFrom().getId());
+        Long roomId = gameContainer.roomOfUser(message.getFrom().getId());
         if (Objects.isNull(roomId)) {
             Account account = accountCache.get(message.getFrom().getId());
             sendMessage(message, "game.not.started.yet",

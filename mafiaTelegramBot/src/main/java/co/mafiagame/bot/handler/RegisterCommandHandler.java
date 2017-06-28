@@ -88,7 +88,7 @@ public class RegisterCommandHandler extends TelegramCommandHandler {
                     MessageHolder.get("mafia.are.players", room.getLang(),
                         room.getGame().mafias().stream()
                             .map(Player::getUserId)
-                            .map(Integer::valueOf)
+                            .map(Long::valueOf)
                             .map(room::findPlayer)
                             .map(Optional::get)
                             .map(Account::fullName)

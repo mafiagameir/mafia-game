@@ -62,7 +62,7 @@ public class StartPrimaryElectionCommandHandler extends TelegramCommandHandler {
         room.getGame().startPrimaryElection();
         List<Player> players = room.getGame().alivePlayer();
         List<String> options = players.stream().map(Player::getUserId)
-            .map(Integer::valueOf).map(accountCache::get).map(a ->
+            .map(Long::valueOf).map(accountCache::get).map(a ->
                 MessageHolder.get("vote.to", room.getLang()) + " " +
                     a.fullName())
             .collect(Collectors.toList());

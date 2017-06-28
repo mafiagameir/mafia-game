@@ -24,8 +24,8 @@ public class HealCommandHandler extends TelegramCallbackHandler {
 
     @Override
     public void execute(TCallBackQuery callBackQuery) {
-        Integer callerId = callBackQuery.getFrom().getId();
-        Integer roomId = gameContainer.roomOfUser(callerId);
+        Long callerId = callBackQuery.getFrom().getId();
+        Long roomId = gameContainer.roomOfUser(callerId);
         if (Objects.isNull(roomId))
             throw new GameNotStartedYetException();
         Room room = gameContainer.room(roomId);
@@ -34,7 +34,7 @@ public class HealCommandHandler extends TelegramCallbackHandler {
         client.editMessageText(new EditMessageTextRequest()
             .setText(MessageHolder.get("ok",
                 room.getLang(),
-                room.findPlayer(Integer.valueOf(target))
+                room.findPlayer(Long.valueOf(target))
                     .orElseThrow(IllegalStateException::new).fullName()))
             .setMessageId(callBackQuery.getMessage().getId())
             .setChatId(callBackQuery.getMessage().getChat().getId())

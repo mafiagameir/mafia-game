@@ -62,7 +62,7 @@ public class Game {
      * @param hasDetective  indicate the game contain a detective
      * @param configuration the client system configuration which indicate listeners of game events
      */
-    public Game(String gameId, int citizenNo, int mafiaNo, boolean hasDoctor, boolean hasDetective,
+    public Game(String gameId, long citizenNo, long mafiaNo, boolean hasDoctor, boolean hasDetective,
                 Configuration configuration) {
         if (mafiaNo <= 0)
             throw new IllegalArgumentException("mafiaNo may not be 0 or lesser");
@@ -257,7 +257,7 @@ public class Game {
     }
 
     private boolean checkGameOver() {
-        int citizenSum = gameState.totalPlayer() - gameState.getMafiaNo();
+        long citizenSum = gameState.totalPlayer() - gameState.getMafiaNo();
         if (gameState.getMafiaNo() >= citizenSum)
             gameResult = GameResult.MAFIAS_WIN;
         else if (gameState.getMafiaNo() == 0)

@@ -37,7 +37,7 @@ public class Account {
     @SequenceGenerator(name = "sequence", allocationSize = 10)
     private Long id;
     @Column(nullable = false, unique = true)
-    private Integer telegramUserId;
+    private Long telegramUserId;
     private String username;
     private String firstName;
     private String lastName;
@@ -69,11 +69,11 @@ public class Account {
         return this;
     }
 
-    public Integer getTelegramUserId() {
+    public Long getTelegramUserId() {
         return telegramUserId;
     }
 
-    public Account setTelegramUserId(Integer telegramUserId) {
+    public Account setTelegramUserId(Long telegramUserId) {
         this.telegramUserId = telegramUserId;
         return this;
     }

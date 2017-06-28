@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class SendMessageResult {
     private boolean ok;
     @JsonProperty("error_code")
-    private Integer errorCode;
+    private Long errorCode;
     private String description;
     private TMessage result;
 
@@ -20,11 +20,11 @@ public class SendMessageResult {
         this.ok = ok;
     }
 
-    public Integer getErrorCode() {
+    public Long getErrorCode() {
         return errorCode;
     }
 
-    public void setErrorCode(Integer errorCode) {
+    public void setErrorCode(Long errorCode) {
         this.errorCode = errorCode;
     }
 

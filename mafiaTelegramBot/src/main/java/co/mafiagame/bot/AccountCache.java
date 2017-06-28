@@ -22,22 +22,22 @@ public class AccountCache {
     @Autowired
     private AccountRepository accountRepository;
 
-    private Cache<Integer, Account> accountCache;
+    private Cache<Long, Account> accountCache;
 
 
     @PostConstruct
     public void init() {
         accountCache = cacheManager.createCache("accountCache",
-                CacheConfigurationBuilder.newCacheConfigurationBuilder(Integer.class, Account.class,
+                CacheConfigurationBuilder.newCacheConfigurationBuilder(Long.class, Account.class,
                         ResourcePoolsBuilder.heap(1000)));
 
     }
 
-    public void put(Integer userId, Account account) {
+    public void put(Long userId, Account account) {
         accountCache.put(userId, account);
     }
 
-    public Account get(Integer userId) {
+    public Account get(Long userId) {
         Account account = accountCache.get(userId);
         if (Objects.isNull(account)) {
             account = accountRepository.findByTelegramUserId(userId);

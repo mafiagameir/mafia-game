@@ -40,7 +40,7 @@ public class HelpCommandHandler extends TelegramCommandHandler {
 
     @Override
     public void execute(TMessage message) {
-        Integer roomId = gameContainer.roomOfUser(message.getFrom().getId());
+        Long roomId = gameContainer.roomOfUser(message.getFrom().getId());
         if (Objects.isNull(roomId)) {
             helpBeforeStart(message);
             return;

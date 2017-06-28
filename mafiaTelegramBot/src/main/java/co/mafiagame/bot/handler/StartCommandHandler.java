@@ -40,7 +40,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class StartCommandHandler extends TelegramCommandHandler {
 
-    private Map<Integer, StartGameState> states = new HashMap<>();
+    private Map<Long, StartGameState> states = new HashMap<>();
     private ScheduledExecutorService scheduledExecutorService = new ScheduledThreadPoolExecutor(1);
 
     @Autowired
@@ -124,7 +124,7 @@ public class StartCommandHandler extends TelegramCommandHandler {
 
     private void readCitizenNo(StartGameState startGameState, TMessage message, MessageHolder.Lang lang) {
         try {
-            startGameState.citizenNo = Integer.valueOf(message.getText());
+            startGameState.citizenNo = Long.valueOf(message.getText());
             client.send(new SendMessageWithForceReply()
                 .setReplyMarkup(new TForceReply())
                 .setReplyToMessageId(message.getId())
@@ -141,7 +141,7 @@ public class StartCommandHandler extends TelegramCommandHandler {
 
     private void readMafiaNo(StartGameState startGameState, TMessage message, MessageHolder.Lang lang) {
         try {
-            startGameState.mafiaNo = Integer.valueOf(message.getText());
+            startGameState.mafiaNo = Long.valueOf(message.getText());
             client.send(new SendMessageWithReplyKeyboard()
                 .setReplyMarkup(new TReplyKeyboardMarkup()
                     .setKeyboard(Collections.singletonList(Arrays.asList(
@@ -202,8 +202,8 @@ public class StartCommandHandler extends TelegramCommandHandler {
     }
 
     private static class StartGameState {
-        private Integer citizenNo;
-        private Integer mafiaNo;
+        private Long citizenNo;
+        private Long mafiaNo;
         private Boolean hasDetective;
         private Boolean hasDoctor;
     }

@@ -29,22 +29,22 @@ import java.util.List;
  */
 public class TMessage {
     @JsonProperty("message_id")
-    private Integer id;
+    private Long id;
     private TUser from;
-    private Integer date;
+    private Long date;
     private TChat chat;
     @JsonProperty("forward_from")
     private TUser forwardFrom;
     @JsonProperty("forward_from_chat")
     private TChat forwardFromChat;
     @JsonProperty("forward_from_message_id")
-    private Integer forwardFromMessageId;
+    private Long forwardFromMessageId;
     @JsonProperty("forward_date")
-    private Integer forwardDate;
+    private Long forwardDate;
     @JsonProperty("reply_to_message")
     private TMessage replyToMessage;
     @JsonProperty("edit_date")
-    private Integer editDate;
+    private Long editDate;
     private String text;
     private List<TMessageEntity> entities;
 
@@ -65,11 +65,11 @@ public class TMessage {
     private Boolean channelChatCreated;
 
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -81,11 +81,11 @@ public class TMessage {
         this.from = from;
     }
 
-    public Integer getDate() {
+    public Long getDate() {
         return date;
     }
 
-    public void setDate(Integer date) {
+    public void setDate(Long date) {
         this.date = date;
     }
 
@@ -113,11 +113,11 @@ public class TMessage {
         this.forwardFromChat = forwardFromChat;
     }
 
-    public Integer getForwardDate() {
+    public Long getForwardDate() {
         return forwardDate;
     }
 
-    public void setForwardDate(Integer forwardDate) {
+    public void setForwardDate(Long forwardDate) {
         this.forwardDate = forwardDate;
     }
 
@@ -129,11 +129,11 @@ public class TMessage {
         this.replyToMessage = replyToMessage;
     }
 
-    public Integer getEditDate() {
+    public Long getEditDate() {
         return editDate;
     }
 
-    public void setEditDate(Integer editDate) {
+    public void setEditDate(Long editDate) {
         this.editDate = editDate;
     }
 

@@ -41,7 +41,7 @@ import java.util.stream.Collectors;
  */
 @Component
 public class VoteCommandHandler extends TelegramCommandHandler {
-    private Map<Integer, List<Account>> votes = new HashMap<>();
+    private Map<Long, List<Account>> votes = new HashMap<>();
 
     @Override
     protected Collection<String> getCommandString() {
@@ -104,7 +104,7 @@ public class VoteCommandHandler extends TelegramCommandHandler {
                 .setText(MessageHolder.get("election.result", room.getLang()) +
                         electionResult.getResult().keySet().stream()
                                 .map(k -> MessageHolder.get("vote.for.user", room.getLang(),
-                                        room.findPlayer(Integer.valueOf(k)).get().fullName(),
+                                        room.findPlayer(Long.valueOf(k)).get().fullName(),
                                         String.valueOf(electionResult.getResult().get(k))))
                                 .collect(Collectors.joining("\n"))
                 ));
@@ -121,7 +121,7 @@ public class VoteCommandHandler extends TelegramCommandHandler {
     }
 
     private void handlePlayerKilled(Room room, ElectionResult electionResult) {
-        Integer victim = Integer.valueOf(electionResult.getElects().get(0));
+        Long victim = Long.valueOf(electionResult.getElects().get(0));
         client.send(new SendMessage()
                 .setChatId(room.getRoomId())
                 .setText(MessageHolder.get("player.was.killed.with.maximum.votes", room.getLang(),

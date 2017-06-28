@@ -34,7 +34,7 @@ public class Room {
     private Game game;
     private MessageHolder.Lang lang;
     private List<Account> accounts = new ArrayList<>();
-    private Integer roomId;
+    private Long roomId;
 
     public Game getGame() {
         return game;
@@ -63,7 +63,7 @@ public class Room {
         return this;
     }
 
-    public Optional<Account> findPlayer(Integer userId) {
+    public Optional<Account> findPlayer(Long userId) {
         return accounts.stream().filter(a -> Objects.equals(a.getTelegramUserId(), userId)).findAny();
     }
 
@@ -71,11 +71,11 @@ public class Room {
         return accounts.stream().filter(a -> a.fullName().trim().equals(fullName.trim())).findAny();
     }
 
-    public Integer getRoomId() {
+    public Long getRoomId() {
         return roomId;
     }
 
-    public Room setRoomId(Integer roomId) {
+    public Room setRoomId(Long roomId) {
         this.roomId = roomId;
         return this;
     }

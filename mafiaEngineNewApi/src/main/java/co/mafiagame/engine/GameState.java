@@ -28,13 +28,13 @@ import java.util.stream.Collectors;
  */
 class GameState {
     private boolean gameStarted = false;
-    private int citizenNo;
-    private int mafiaNo;
+    private long citizenNo;
+    private long mafiaNo;
     private boolean hasDetective;
     private boolean hasDoctor;
     private Map<String, Player> alivePlayersMap = new HashMap<>();
 
-    GameState(int citizenNo, int mafiaNo,
+    GameState(long citizenNo, long mafiaNo,
               boolean hasDetective, boolean hasDoctor) {
         this.citizenNo = citizenNo;
         this.mafiaNo = mafiaNo;
@@ -72,7 +72,7 @@ class GameState {
         }
     }
 
-    int totalPlayer() {
+    long totalPlayer() {
         return citizenNo + mafiaNo + (hasDetective ? 1 : 0) + (hasDoctor ? 1 : 0);
     }
 
@@ -101,11 +101,11 @@ class GameState {
             throw new PlayerNotFoundException(userId);
     }
 
-    int getCitizenNo() {
+    long getCitizenNo() {
         return citizenNo;
     }
 
-    int getMafiaNo() {
+    long getMafiaNo() {
         return mafiaNo;
     }
 

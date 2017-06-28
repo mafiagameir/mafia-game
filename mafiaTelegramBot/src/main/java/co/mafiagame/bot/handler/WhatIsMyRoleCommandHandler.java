@@ -48,7 +48,7 @@ public class WhatIsMyRoleCommandHandler extends TelegramCommandHandler {
             sendMessage(message, "command.not.available.in.group", getLang(message), false);
             return;
         }
-        Integer roomId = gameContainer.roomOfUser(message.getFrom().getId());
+        Long roomId = gameContainer.roomOfUser(message.getFrom().getId());
         if (Objects.isNull(roomId)) {
             sendMessage(message, "game.not.started.yet", getLang(message), false);
             return;

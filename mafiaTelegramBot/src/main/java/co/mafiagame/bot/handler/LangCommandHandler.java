@@ -41,7 +41,7 @@ public class LangCommandHandler extends TelegramCallbackHandler {
                 .setText(MessageHolder.get("add.me.to.group", MessageHolder.Lang.valueOf(lang))));
     }
 
-    private void setLang(Integer userId, MessageHolder.Lang lang) {
+    private void setLang(Long userId, MessageHolder.Lang lang) {
         accountRepository.save(
                 accountRepository.findByTelegramUserId(userId)
                         .setLang(lang));

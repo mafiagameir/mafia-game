@@ -10,30 +10,30 @@ import java.util.Map;
  */
 @Component
 public class GameContainer {
-    private final Map<Integer, Integer> userRooms = new HashMap<>(); //userId -> roomId
-    private final Map<Integer, Room> rooms = new HashMap<>(); //roomId-> Room
+    private final Map<Long, Long> userRooms = new HashMap<>(); //userId -> roomId
+    private final Map<Long, Room> rooms = new HashMap<>(); //roomId-> Room
 
-    public Integer roomOfUser(Integer userId) {
+    public Long roomOfUser(Long userId) {
         return userRooms.get(userId);
     }
 
-    public Room room(Integer roomId) {
+    public Room room(Long roomId) {
         return rooms.get(roomId);
     }
 
-    public void putRoom(Integer roomId, Room room) {
+    public void putRoom(Long roomId, Room room) {
         rooms.put(roomId, room);
     }
 
-    public void putUserRoom(Integer userId, Integer roomId) {
+    public void putUserRoom(Long userId, Long roomId) {
         userRooms.put(userId, roomId);
     }
 
-    public void removeUser(Integer userId) {
+    public void removeUser(Long userId) {
         userRooms.remove(userId);
     }
 
-    public void removeRoom(Integer roomId) {
+    public void removeRoom(Long roomId) {
         rooms.remove(roomId);
     }
 

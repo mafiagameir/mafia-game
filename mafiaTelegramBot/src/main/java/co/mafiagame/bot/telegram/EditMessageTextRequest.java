@@ -9,9 +9,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EditMessageTextRequest {
     @JsonProperty("chat_id")
-    private Integer chatId;
+    private Long chatId;
     @JsonProperty("message_id")
-    private Integer messageId;
+    private Long messageId;
     private String text;
     @JsonProperty("parse_mode")
     private String parseMode;
@@ -20,20 +20,20 @@ public class EditMessageTextRequest {
     @JsonProperty("reply_markup")
     private TInlineKeyboardMarkup replyMarkup;
 
-    public Integer getChatId() {
+    public Long getChatId() {
         return chatId;
     }
 
-    public EditMessageTextRequest setChatId(Integer chatId) {
+    public EditMessageTextRequest setChatId(Long chatId) {
         this.chatId = chatId;
         return this;
     }
 
-    public Integer getMessageId() {
+    public Long getMessageId() {
         return messageId;
     }
 
-    public EditMessageTextRequest setMessageId(Integer messageId) {
+    public EditMessageTextRequest setMessageId(Long messageId) {
         this.messageId = messageId;
         return this;
     }
