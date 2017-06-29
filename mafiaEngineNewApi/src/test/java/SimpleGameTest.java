@@ -28,18 +28,18 @@ import java.util.Collections;
  */
 public class SimpleGameTest {
     @Test
-    public void test() {
+    public void test() throws InterruptedException {
         final GameResult[] gameResult = new GameResult[1];
         Configuration configuration = new Configuration.Builder()
-            .registerDetectiveTurnListener((game) -> System.out.println(game.getGameId() + ": detective turn"))
-            .registerDoctorTurnListener((game) -> System.out.println(game.getGameId() + ": doctor turn"))
-            .registerMafiaTurnListener((game) -> System.out.println(game.getGameId() + ": mafia turn"))
-            .registerSunriseListener((game, nightResult) ->
-                System.out.println(game.getGameId() + ": sunrise with result: " + nightResult))
-            .registerGameFinishListener((game, result) -> {
-                gameResult[0] = result;
-                System.out.println(game.getGameId() + ": game finished with result: " + result);
-            }).build();
+                .registerDetectiveTurnListener((game) -> System.out.println(game.getGameId() + ": detective turn"))
+                .registerDoctorTurnListener((game) -> System.out.println(game.getGameId() + ": doctor turn"))
+                .registerMafiaTurnListener((game) -> System.out.println(game.getGameId() + ": mafia turn"))
+                .registerSunriseListener((game, nightResult) ->
+                        System.out.println(game.getGameId() + ": sunrise with result: " + nightResult))
+                .registerGameFinishListener((game, result) -> {
+                    gameResult[0] = result;
+                    System.out.println(game.getGameId() + ": game finished with result: " + result);
+                }).build();
 
         Game game = new Game("1", 3, 2, true, true, configuration);
         Assert.assertFalse(game.registerPlayer("1"));
@@ -131,7 +131,8 @@ public class SimpleGameTest {
 
         //sunrise - detective killed
         //game finished
-        Assert.assertEquals(gameResult[0], GameResult.MAFIAS_WIN);
+        Thread.sleep(1000L);
+        Assert.assertEquals(GameResult.MAFIAS_WIN, gameResult[0]);
 
     }
 }

@@ -62,7 +62,7 @@ public class Game {
      * @param hasDetective  indicate the game contain a detective
      * @param configuration the client system configuration which indicate listeners of game events
      */
-    public Game(String gameId, long citizenNo, long mafiaNo, boolean hasDoctor, boolean hasDetective,
+    public Game(String gameId, int citizenNo, int mafiaNo, boolean hasDoctor, boolean hasDetective,
                 Configuration configuration) {
         if (mafiaNo <= 0)
             throw new IllegalArgumentException("mafiaNo may not be 0 or lesser");

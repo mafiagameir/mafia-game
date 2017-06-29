@@ -28,13 +28,13 @@ import java.util.stream.Collectors;
  */
 class GameState {
     private boolean gameStarted = false;
-    private long citizenNo;
-    private long mafiaNo;
+    private int citizenNo;
+    private int mafiaNo;
     private boolean hasDetective;
     private boolean hasDoctor;
     private Map<String, Player> alivePlayersMap = new HashMap<>();
 
-    GameState(long citizenNo, long mafiaNo,
+    GameState(int citizenNo, int mafiaNo,
               boolean hasDetective, boolean hasDoctor) {
         this.citizenNo = citizenNo;
         this.mafiaNo = mafiaNo;
@@ -51,7 +51,7 @@ class GameState {
     }
 
     void killPlayer(String playerUserId) {
-        if ("nobody".equals(playerUserId))
+        if (Player.NOBODY_USERID.equals(playerUserId))
             return;
         Player removed = alivePlayersMap.remove(playerUserId);
         switch (removed.getRole()) {
