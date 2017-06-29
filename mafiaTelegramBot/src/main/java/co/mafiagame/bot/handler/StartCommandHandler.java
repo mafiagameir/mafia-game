@@ -102,7 +102,7 @@ public class StartCommandHandler extends TelegramCommandHandler {
                     .setText(MessageHolder.get("initiate.game.timeout", lang))
                     .setChatId(message.getChat().getId())
                 );
-            }, 5, TimeUnit.MINUTES);
+            }, 10, TimeUnit.MINUTES);
         }
     }
 
