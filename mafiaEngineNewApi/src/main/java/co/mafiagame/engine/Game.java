@@ -65,9 +65,9 @@ public class Game {
     public Game(String gameId, int citizenNo, int mafiaNo, boolean hasDoctor, boolean hasDetective,
                 Configuration configuration) {
         if (mafiaNo <= 0)
-            throw new IllegalArgumentException("mafiaNo may not be 0 or lesser");
+            throw new MafiaNoCouldNotBeZeroException();
         if (citizenNo <= 0)
-            throw new IllegalArgumentException("citizenNo may not be 0 or lesser");
+            throw new CitizenNoCouldNotBeZeroException();
         this.gameId = gameId;
         createdDate = new Date();
         lastUpdate = new Date();
