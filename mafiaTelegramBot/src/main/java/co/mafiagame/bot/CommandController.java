@@ -47,37 +47,41 @@ public class CommandController {
 	private String telegramToken;
 	@Value("${mafia.telegram.api.url}")
 	private String telegramUrl;
+	@Value("${mafia.telegram.use.webhook}")
+	private Boolean useWebHook;
 
 	@PostConstruct
 	public void init() {
-		RestTemplate restTemplate = new RestTemplate();
-		setErrorHandler(restTemplate);
-		Thread thread = new Thread(() -> {
-			try {
-				long offset = 1;
-				Thread.sleep(TimeUnit.SECONDS.toMillis(5));
-				while (true) {
-					try {
-						TResult tResult = restTemplate.getForObject(
-										telegramUrl + telegramToken + "/getUpdates?offset=" + String.valueOf(offset + 1),
-										TResult.class);
-						for (TUpdate update : tResult.getResult()) {
-							if (offset < update.getId()) {
-								offset = update.getId();
-								handleMessage(update);
-								logger.debug("offset set to {}", offset);
+		if (!useWebHook) {
+			RestTemplate restTemplate = new RestTemplate();
+			setErrorHandler(restTemplate);
+			Thread thread = new Thread(() -> {
+				try {
+					long offset = 1;
+					Thread.sleep(TimeUnit.SECONDS.toMillis(5));
+					while (true) {
+						try {
+							TResult tResult = restTemplate.getForObject(
+											telegramUrl + telegramToken + "/getUpdates?offset=" + String.valueOf(offset + 1),
+											TResult.class);
+							for (TUpdate update : tResult.getResult()) {
+								if (offset < update.getId()) {
+									offset = update.getId();
+									handleMessage(update);
+									logger.debug("offset set to {}", offset);
+								}
 							}
+							Thread.sleep(200);
+						} catch (Exception e) {
+							logger.error(e.getMessage(), e);
 						}
-						Thread.sleep(200);
-					} catch (Exception e) {
-						logger.error(e.getMessage(), e);
 					}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		});
-		thread.start();
+			});
+			thread.start();
+		}
 	}
 
 	private void setErrorHandler(RestTemplate restTemplate) {
@@ -98,7 +102,7 @@ public class CommandController {
 
 	@RequestMapping(value = "/{token}/update", method = RequestMethod.POST)
 	public void getUpdate(@PathVariable String token, @RequestBody TUpdate update) {
-		logger.debug("receive: {}", update);
+		logger.info("receive: {}", update);
 		if (!validate(token)) {
 			logger.warn("Suspicious connection with token {} and update {}", token, update);
 			return;
