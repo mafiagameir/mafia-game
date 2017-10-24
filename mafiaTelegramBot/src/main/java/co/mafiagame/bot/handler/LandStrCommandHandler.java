@@ -1,10 +1,7 @@
 package co.mafiagame.bot.handler;
 
 import co.mafiagame.bot.persistence.domain.Account;
-import co.mafiagame.bot.telegram.SendMessageWithInlineKeyboard;
-import co.mafiagame.bot.telegram.TInlineKeyboardButton;
-import co.mafiagame.bot.telegram.TInlineKeyboardMarkup;
-import co.mafiagame.bot.telegram.TMessage;
+import co.mafiagame.bot.telegram.*;
 import co.mafiagame.bot.util.MessageHolder;
 import co.mafiagame.engine.Constants;
 import org.springframework.stereotype.Component;
@@ -38,8 +35,14 @@ public class LandStrCommandHandler extends TelegramCommandHandler {
 			if (Objects.isNull(account)) {
 				account = accountRepository.save(new Account(message.getFrom()).setLang(lang));
 				accountCache.put(account.getTelegramUserId(), account);
-			} else
-				accountRepository.save(account.setLang(lang));
+			} else {
+				account = accountRepository.save(account.setLang(lang));
+				accountCache.put(account.getTelegramUserId(), account);
+			}
+			client.send(new SendMessage()
+							.setChatId(message.getChat().getId())
+							.setText(MessageHolder.get("language.changed", lang))
+			);
 		}
 	}
 
