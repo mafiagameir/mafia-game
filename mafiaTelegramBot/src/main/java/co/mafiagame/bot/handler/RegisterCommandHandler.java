@@ -113,6 +113,6 @@ public class RegisterCommandHandler extends TelegramCommandHandler {
 																.collect(Collectors.joining(
 																				MessageHolder.get("and", room.getLang()))));
 		}
-		throw new IllegalStateException();
+        return MessageHolder.get("your.dead",room.getLang());
 	}
 }
