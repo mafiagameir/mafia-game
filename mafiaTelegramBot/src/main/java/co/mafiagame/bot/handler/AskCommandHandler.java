@@ -33,7 +33,7 @@ public class AskCommandHandler extends TelegramCallbackHandler {
         if (Objects.isNull(roomId))
             throw new GameNotStartedYetException();
         Room room = gameContainer.room(roomId);
-        String target = callBackQuery.getData().substring(callBackQuery.getData().indexOf(" "));
+        String target = callBackQuery.getData().substring(callBackQuery.getData().indexOf(" ")).trim();
         boolean result = room.getGame().ask(String.valueOf(callerId), target);
         client.editMessageText(new EditMessageTextRequest()
             .setText(MessageHolder.get(result ? "user.role.is.mafia" : "user.role.is.not.mafia",

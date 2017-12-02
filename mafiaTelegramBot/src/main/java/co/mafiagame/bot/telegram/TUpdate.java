@@ -29,6 +29,7 @@ public class TUpdate {
     private TMessage message;
     @JsonProperty("callback_query")
     private TCallBackQuery callBackQuery;
+
     public Long getId() {
         return id;
     }
@@ -57,8 +58,9 @@ public class TUpdate {
     @Override
     public String toString() {
         return "TUpdate{" +
-            "id=" + id +
-            ", message=" + message +
-            '}';
+                "id=" + id +
+                ", message=" + message +
+                ", callBackQuery=" + callBackQuery +
+                '}';
     }
 }

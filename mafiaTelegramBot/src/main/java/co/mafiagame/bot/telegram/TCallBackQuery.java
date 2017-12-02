@@ -70,4 +70,16 @@ public class TCallBackQuery {
         this.data = data;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "TCallBackQuery{" +
+                "id='" + id + '\'' +
+                ", from=" + from +
+                ", message=" + message +
+                ", inlineMessageId='" + inlineMessageId + '\'' +
+                ", chatInstance='" + chatInstance + '\'' +
+                ", data='" + data + '\'' +
+                '}';
+    }
 }

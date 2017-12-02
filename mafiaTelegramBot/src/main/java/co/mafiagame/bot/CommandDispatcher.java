@@ -26,77 +26,78 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 public class CommandDispatcher {
-	private static final Logger logger = LoggerFactory.getLogger(CommandDispatcher.class);
-	private Map<String, TelegramCommandHandler> commandHandlers = new HashMap<>();
-	private Map<String, TelegramCallbackHandler> callbackHandlers = new HashMap<>();
-	private ExecutorService executorService =
-					new ThreadPoolExecutor(5, 10, 5,
-									TimeUnit.MINUTES, new LinkedBlockingQueue<>(40));
-	@Autowired
-	private TelegramClient client;
-	@Autowired
-	private AccountCache accountCache;
+    private static final Logger logger = LoggerFactory.getLogger(CommandDispatcher.class);
+    private Map<String, TelegramCommandHandler> commandHandlers = new HashMap<>();
+    private Map<String, TelegramCallbackHandler> callbackHandlers = new HashMap<>();
+    private ExecutorService executorService =
+            new ThreadPoolExecutor(5, 10, 5,
+                    TimeUnit.MINUTES, new LinkedBlockingQueue<>(40));
+    @Autowired
+    private TelegramClient client;
+    @Autowired
+    private AccountCache accountCache;
 
-	public static String removeSlash(String message) {
-		if (message.startsWith("/"))
-			return message.substring(1).toLowerCase();
-		else
-			return message;
-	}
+    public static String removeSlash(String message) {
+        if (message.startsWith("/"))
+            return message.substring(1).toLowerCase();
+        else
+            return message;
+    }
 
-	public void handleCallback(TCallBackQuery callBackQuery) {
-		String command = callBackQuery.getData().substring(0, callBackQuery.getData().indexOf(" "));
-		executorService.submit(() -> {
-			try {
-				callbackHandlers.get(command).execute(callBackQuery);
-			} catch (MafiaException e) {
-				logger.warn(e.getMessage(), e);
-				client.send(new SendMessage()
-								.setText(MessageHolder.get(e.getMessageCode(),
-												accountCache.get(callBackQuery.getFrom().getId()).getLang(),
-												e.getMessageArgs())));
-			} catch (IllegalArgumentException | IllegalStateException e) {
-				logger.warn(e.getMessage(), e);
-				client.send(new SendMessage()
-								.setText(MessageHolder.get("illegal.argument",
-												accountCache.get(callBackQuery.getFrom().getId()).getLang()
-								)));
-			} catch (Exception e) {
-				logger.error(e.getMessage(), e);
-			}
-		});
-	}
+    public void handleCallback(TCallBackQuery callBackQuery) {
+        String command = callBackQuery.getData().substring(0, callBackQuery.getData().indexOf(" "));
+        executorService.submit(() -> {
+            try {
+                callbackHandlers.get(command).execute(callBackQuery);
+            } catch (MafiaException e) {
+                logger.warn(e.getMessage(), e);
+                client.send(new SendMessage()
+                        .setChatId(callBackQuery.getFrom().getId())
+                        .setText(MessageHolder.get(e.getMessageCode(),
+                                accountCache.get(callBackQuery.getFrom().getId()).getLang(),
+                                e.getMessageArgs())));
+            } catch (IllegalArgumentException | IllegalStateException e) {
+                logger.warn(e.getMessage(), e);
+                client.send(new SendMessage()
+                        .setText(MessageHolder.get("illegal.argument",
+                                accountCache.get(callBackQuery.getFrom().getId()).getLang()
+                        )));
+            } catch (Exception e) {
+                logger.error(e.getMessage(), e);
+            }
+        });
+    }
 
-	public void handleMessage(TMessage message) {
-		if (message.isNotCommand())
-			return;
-		String command = getCommand(message.getText()).orElse(Constants.Command.START_STASHED_GAME);
-		TelegramCommandHandler handler = commandHandlers.get(command.toLowerCase());
-		executorService.submit(() -> {
-			try {
-				handler.execute(message);
-			} catch (MafiaException e) {
-				logger.warn(e.getMessage(), e);
-				client.send(new SendMessage()
-								.setText(MessageHolder.get(e.getMessageCode(),
-												accountCache.get(message.getFrom().getId()).getLang(),
-												e.getMessageArgs())));
-			} catch (Exception e) {
-				logger.error(e.getMessage(), e);
-			}
-		});
-	}
+    public void handleMessage(TMessage message) {
+        if (message.isNotCommand())
+            return;
+        String command = getCommand(message.getText()).orElse(Constants.Command.START_STASHED_GAME);
+        TelegramCommandHandler handler = commandHandlers.get(command.toLowerCase());
+        executorService.submit(() -> {
+            try {
+                handler.execute(message);
+            } catch (MafiaException e) {
+                logger.warn(e.getMessage(), e);
+                client.send(new SendMessage()
+                        .setText(MessageHolder.get(e.getMessageCode(),
+                                accountCache.get(message.getFrom().getId()).getLang(),
+                                e.getMessageArgs())));
+            } catch (Exception e) {
+                logger.error(e.getMessage(), e);
+            }
+        });
+    }
 
-	public void registerCommandHandler(String command, TelegramCommandHandler handler) {
-		commandHandlers.put(command, handler);
-	}
+    public void registerCommandHandler(String command, TelegramCommandHandler handler) {
+        commandHandlers.put(command, handler);
+    }
 
-	public void registerCallbackHandler(String command, TelegramCallbackHandler handler) {
-		callbackHandlers.put(command, handler);
-	}
+    public void registerCallbackHandler(String command, TelegramCallbackHandler handler) {
+        callbackHandlers.put(command, handler);
+    }
 
-	private Optional<String> getCommand(String message) {
-		String pureMessage = removeSlash(message);
-		return commandHandlers.keySet().stream().filter(pureMessage::startsWith).findAny();
-	}
+    private Optional<String> getCommand(String message) {
+        String pureMessage = removeSlash(message);
+        return commandHandlers.keySet().stream().filter(pureMessage::startsWith).findAny();
+    }
 }
