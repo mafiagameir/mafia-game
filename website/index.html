@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Telegram Mafia Group Game Bot, Telegram bot of Mafia Group Game, Mafia Game Online">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta>
+    <title>Telegram Mafia Group Game Bot</title>
+    <link rel="alternate" href="https://mafiagame.ir/fa/" hreflang="fa-IR" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="lib/uikit/css/uikit.css">
+    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="lib/uikit/js/uikit.min.js"></script>
+    <script src="lib/uikit/js/components/sticky.min.js"></script>
+    <style>
+        @font-face {
+            font-family: 'Yekan';
+            src: url('fonts/BYekan.eot');
+            src: url('fonts/BYekan.eot?iefix') format('eot'),
+            url('fonts/BYekan.woff') format('woff'),
+            url('fonts/BYekan.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        * {
+            font-family: Yekan, sans-serif !important;
+        }
+
+        code {
+            float: left;
+            direction: ltr;
+            color: black;
+        }
+
+        .uk-navbar-nav > li.uk-active > a {
+            color: #333333;
+        }
+
+        article {
+            padding-top: 40px;
+        }
+
+        @media screen and (min-width: 680px) {
+            #banner {
+                height: 450px;
+                background: black url(img/background.jpg) no-repeat left;
+            }
+
+            #cover-box {
+                background: url(img/mafia.svg) 50% 0 fixed no-repeat;
+            }
+        }
+    </style>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-69683525-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</head>
+<body>
+<div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
+    <nav class="uk-navbar uk-margin-large-bottom" data-uk-sticky>
+        <a class="uk-navbar-brand uk-hidden-small" href="/">Mafia Bot</a>
+        <ul class="uk-navbar-nav uk-hidden-small" data-uk-scrollspy-nav="{closest:'li', smoothscroll:true}">
+            <li><a href="#index">Home</a></li>
+            <li><a href="#mafiagame">Game Instruction</a></li>
+            <li><a href="#help">Bot Instruction</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#contactus">Contact us</a></li>
+            <li><a href="http://github.com/mafiagameir/">Code</a></li>
+        </ul>
+        <ul class="uk-navbar-nav uk-navbar-flip">
+            <li><a href="/fa/">فارسی</a></li>
+        </ul>
+        <a href="#offcanvas" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas></a>
+        <div class="uk-navbar-brand uk-navbar-center uk-visible-small">Mafia</div>
+    </nav>
+    <div id="index" style="margin-top: 20px">
+        <div class="uk-width-medium-1-1 uk-margin-small-top">
+            <div class="uk-vertical-align uk-text-center" id="banner">
+                <div class="uk-vertical-align-middle uk-width-1-2">
+                    <h1 class="uk-heading-large">Telegram Mafia Group Game Bot</h1>
+                    <p class="uk-text-large">Add Mafia Bot into your groups</p>
+                    <p>
+                        <a class="uk-button uk-button-primary uk-button-large"
+                           href="https://telegram.me/mafiagbot">Mafia Bot</a>
+                        <a class="uk-button uk-button-large" href="#help">Bot Instruction</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="cover-box">
+        <article id="mafiagame">
+            <header>
+                <h1>Game Instruction</h1>
+            </header>
+            <section>
+                <h2>Introducing The Game</h2>
+                <p style="text-align: justify">
+                    For complete manual of classical mafia game read
+                    <a href="http://fringe.davesource.com/Fringe/Entertainment/Games/Indoors/Mafia/">this
+                        instruction</a>.
+                    If you have willing to know more about game read
+                    <a href="https://en.wikipedia.org/wiki/Mafia_(party_game)">wikipedia entry</a>.
+                    In this bot we have four playing rule:
+                    <a href="#citizen">citizen</a>,
+                    <a href="#mafia">mafia</a>,
+                    <a href="#detective">detective</a> and
+                    <a href="#doctor">doctor</a>.
+                </p>
+            </section>
+            <hr/>
+            <section id="citizen">
+                <h4>Role - Citizen</h4>
+                <p style="text-align: justify">
+                    Their goal is to figure out who is a member of secret Mafia, and try to eliminate them
+                    during the day.
+                </p>
+            </section>
+            <section id="detective">
+                <h4>Role - Detective</h4>
+                <p style="text-align: justify">
+                    Detective try to figure out who is guilty of being a Mafia and who is innocent. Every
+                    night detective asks from moderator(Bot) about one person and moderator(Bot) answers if
+                    that person is Mafia or not. thus their goal is to help the citizens vote correctly in
+                    who to eliminate during the day. They generally want to keep their identity secret so
+                    that the Mafia cannot eliminate them early.
+                </p>
+            </section>
+            <section id="doctor">
+                <h4>Role - Doctor</h4>
+                <p style="text-align: justify">
+                    Doctor is a protecting character, who wakes up once during each night and indicates
+                    someone who is to be protected. If Mafia try to kill the protected person he/she will
+                    survives.
+                </p>
+            </section>
+            <section id="mafia">
+                <h4>Role - Mafia</h4>
+                <p style="text-align: justify">
+                    Mafia unlike citizens is a small group of people which know each other. they try to keep
+                    their identity secret and eliminate citizens.
+                </p>
+            </section>
+        </article>
+        <article id="help">
+            <header><h1>Bot Instruction </h1></header>
+            <section id="playing">
+                <header><h2>How to play game with bot</h2></header>
+                <p style="text-align: justify">
+                    To use the bot must first add it to your group chat. To do this use <a
+                        href="https://telegram.me/mafiagbot?startgroup=0">this link</a><br/>You can start the game with
+                    the <a href="#start">start command</a> in a group chat. after entering /start bot will ask you about
+                    game configuration<br/>When the bot says the game has started all players need to sign up
+                    using the keyboard button register provided by bot to the users.<br/>When all players have signed
+                    up,
+                    the game starts automatically in day mode.
+                    At the beginning of the game the bot sends everyone private messages telling them their roles.
+                    It's also tells members of mafia the names of other mafia members. So all mafia members know
+                    each other. At this point if the mafia are more than 2 people, they should create a new group
+                    and add the bot to it.
+                    During the day every user, can start a election using the <a href="#startElection">election
+                    command</a> however this type of election has no influence on the game and it is merely for
+                    information and continued discussion. After the election has started bot create new keyboard with
+                    the
+                    name of the players for everyone, so players can vote each other and in the end they should click on
+                    done button. Voting finishes when everyone has voted, then the results are
+                    announced. Those with more votes should defend their case. You can do as many elections as you
+                    want but in the end a <a href="#startFinalElection">final election</a> should be done and the
+                    one with the most votes will be killed.
+                    When someone is killed during the day, the Night comes. Now it's mafia’s turn. The Mafia discuss
+                    among themselves in their own group and then kill someone with the kill button provided by bot to
+                    them
+                    After the user is killed by Mafia it's the detectives’ turn. The bot will privately ask the
+                    detective whom he/she suspects, and then the detective enter the suspect's name using the keyboard
+                    provided by bot. The bot will then let him know if the suspect is Mafia or not.
+                    After mafia and detective, it is now the Doctor’s turn. Doctor can heal one player per night.
+                    The Bot will privately ask the doctor to name someone to rescue. Doctor has to rescue a player by
+                    selecting his/her name on the keyboard which bot provided.
+                    After doctor’s heal, it will be day again and the Bot will announce the killed player in the
+                    game’s public group chat. The game will continue its routine until whether all the mafia players
+                    being killed or the number of citizens equals the number of mafias.
+                </p>
+            </section>
+            <hr>
+            <section id="start">
+                <header><h2>Start Command</h2></header>
+                <p style="text-align: justify">
+                    To start a new game send this command in a group chat.the bot ask for game configuration.
+                </p>
+                <pre><code>/start</code></pre>
+            </section>
+            <hr>
+            <section id="startElection">
+                <header><h2>Election Command</h2></header>
+                <p style="text-align: justify">
+                    on the day mod, any alive player can send this command to start a new election. after election has
+                    started new keyboard will send to every player, player should vote each other and after that click
+                    on done button to express they are done at voting. keep in mind that this is not yet the final
+                    election and results are just for your information, meaning no one will be killed yet.
+                </p>
+                <pre><code>/election</code></pre>
+            </section>
+            <hr>
+            <section id="startFinalElection">
+                <header><h2>Final Election Command</h2></header>
+                <p style="text-align: justify">
+                    this command is same as <a href="#startElection">Election Command</a> but unlike it, the player with
+                    high vote will be killed.
+                </p>
+                <pre><code>/final_election</code></pre>
+            </section>
+            <hr>
+            <section id="whoisplaying">
+                <header><h2>Who is Playing Command</h2></header>
+                <p style="text-align: justify">
+                    Anytime during game, any user can ask the bot (in private or in public room) about the
+                    remaining players.</p>
+                <pre><code>/who_is_playing</code></pre>
+            </section>
+            <hr>
+            <section id="helpCmd">
+                <header><h2>Help Command</h2></header>
+                <p style="text-align: justify">
+                    If you provide help command in different mode and different state of the game the bot
+                    explain the task you should do.
+                </p>
+                <pre><code>/help</code></pre>
+            </section>
+            <hr>
+            <section id="whatismyrole">
+                <header><h2>What is my role Command</h2></header>
+                <p style="text-align: justify">
+                <p>During game, Players can ask the bot in private chat about their own role.<br/>
+                <pre><code>/what_is_my_role</code></pre>
+            </section>
+            <hr>
+            <section id="killme">
+                <header><h2>Kill me Command</h2></header>
+                <p style="text-align: justify">
+                    Players can kill themselves anytime during the game. Usually this command is used for leaving a
+                    leftover game to be able to start another one. game could be finished if the majority of the player
+                    kill themselves</p>
+                <pre><code>/kill_me</code></pre>
+            </section>
+            <hr>
+            <section id="lang">
+                <header><h2>Change Language Command</h2></header>
+                <p style="text-align: justify">
+                    To change the bot’s interface language, you can use the following commands:<br/>
+                </p>
+                <pre><code>/lang fa</code>
+                    <code>/lang en</code></pre>
+            </section>
+            <hr>
+            <section id="faq">
+                <header><h2>FAQ</h2></header>
+                <dl>
+                    <dt>Is there any official public room to play?</dt>
+                    <dd>No, if you want to play you should find players yourself.</dd>
+                    <dt>Does Mafia kills anyone on the first night?</dt>
+                    <dd>No. The game starts with Day! As the bot announces the roles in a private chat to players
+                        and mafias to other mafia players, the first Night does not exists. It means that neither
+                        Mafia kills anyone nor detective asks about anyone or doctor heals anyone.
+                    </dd>
+                    <dt>Can someone vote to several people during a day?</dt>
+                    <dd>Yes. you can select several player when bot ask to vote and after that you click on done button
+                    </dd>
+                    <dt>Can someone vote for nobody?</dt>
+                    <dd>Yes, without selecting player just click on Done button.
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>Can someone play in several games simultaneously?</dt>
+                    <dd>No. In this case the bot can not recognize which game are the private messages are for.
+                        That’s why the bot does not register the user on the second game unless he leaves the
+                        current game with <a href="#killme">kill me command</a>.
+                    </dd>
+                    <dt>Does the bot announces identity of killed person?</dt>
+                    <dd>No. To keep the game more exciting, the bot does not do that.</dd>
+                    <dt>Does the bot have access to all the messages in the group?</dt>
+                    <dd>No. the Bot is added to groups in “Privacy Mode” and just have access to messages starting
+                        with “/” character or reply to bot itself. For more information on this subject please visit
+                        <a href="https://core.telegram.org/bots/#privacy-mode">this page</a>.
+                    </dd>
+                </dl>
+            </section>
+            <hr>
+            <section id="contactus">
+                <header><h2>Contact us</h2></header>
+                <hr>
+                <p style="text-align: justify">
+                    We love to receive your emails at <a href="mailto:info@mafiagame.ir">info@mafiagame.ir</a>
+                    <br/>
+                    you can also contact us by <a href="https://telegram.me/hekmatof">telegram</a>
+                </p>
+            </section>
+        </article>
+    </div>
+    <div id="offcanvas" class="uk-offcanvas">
+        <div class="uk-offcanvas-bar">
+            <ul class="uk-nav uk-nav-offcanvas">
+                <li>
+                    <a href="#index">Home</a>
+                </li>
+                <li>
+                    <a href="#mafiagame">Game Instruction</a>
+                </li>
+                <li>
+                    <a href="#help">Bot Instruction</a>
+                </li>
+                <li>
+                    <a href="#contactus">Contact us</a>
+                </li>
+                <li>
+                    <a href="http://github.com/mafiagameir/">Code</a>
+                </li>
+                <li>
+                    <a href="/fa">فارسی</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -20,8 +20,10 @@ package co.mafiagame.bot.handler;
 
 import co.mafiagame.bot.Room;
 import co.mafiagame.bot.telegram.TMessage;
+import co.mafiagame.bot.util.MessageHolder;
 import co.mafiagame.engine.Constants;
 import co.mafiagame.engine.GameMood;
+import co.mafiagame.engine.Role;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -33,34 +35,54 @@ import java.util.Objects;
  */
 @Component
 public class HelpCommandHandler extends TelegramCommandHandler {
-    @Override
-    protected Collection<String> getCommandString() {
-        return Collections.singleton(Constants.Command.HELP);
-    }
+	@Override
+	protected Collection<String> getCommandString() {
+		return Collections.singleton(Constants.Command.HELP);
+	}
 
-    @Override
-    public void execute(TMessage message) {
-        Long roomId = gameContainer.roomOfUser(message.getFrom().getId());
-        if (Objects.isNull(roomId)) {
-            helpBeforeStart(message);
-            return;
-        }
-        Room room = gameContainer.room(roomId);
-        if (room.getGame().getGameMood() == GameMood.DAY)
-            helpOnDay(message, room);
-        else
-            helpOnNight(message, room);
-    }
+	@Override
+	public void execute(TMessage message) {
+		Long roomId = gameContainer.roomOfUser(message.getFrom().getId());
+		if (Objects.isNull(roomId)) {
+			helpBeforeStart(message);
+			return;
+		}
+		Room room = gameContainer.room(roomId);
+		if (room.getGame().getGameMood() == GameMood.DAY)
+			helpOnDay(message, room);
+		else
+			helpOnNight(message, room);
+	}
 
-    public void helpBeforeStart(TMessage message) {
+	private void helpBeforeStart(TMessage message) {
+		MessageHolder.Lang lang = getLang(message);
+		sendMessage(message, "help.before.start", lang, true);
+	}
 
-    }
+	private void helpOnDay(TMessage message, Room room) {
+		if (room.getGame().isElectionStarted())
+			sendMessage(message, "help.day.election", room.getLang(), true);
+		else
+			sendMessage(message, "help.day.normal", room.getLang(), true);
+	}
 
-    public void helpOnDay(TMessage message, Room room) {
-
-    }
-
-    public void helpOnNight(TMessage message, Room room) {
-
-    }
+	private void helpOnNight(TMessage message, Room room) {
+		if (Objects.equals(room.getRoomId(), message.getChat().getId()))
+			sendMessage(message, "help.wait", room.getLang(), true);
+		else if (room.getGame().getGameMood() == GameMood.NIGHT_MAFIA)
+			if (room.getGame().player(String.valueOf(message.getFrom().getId()).trim()).getRole() == Role.MAFIA)
+				sendMessage(message, "help.night.mafia", room.getLang(), true);
+			else
+				sendMessage(message, "help.wait", room.getLang(), true);
+		else if (room.getGame().getGameMood() == GameMood.NIGHT_DOCTOR)
+			if (room.getGame().player(String.valueOf(message.getFrom().getId()).trim()).getRole() == Role.DOCTOR)
+				sendMessage(message, "help.doctor", room.getLang(), true);
+			else
+				sendMessage(message, "help.wait", room.getLang(), true);
+		else if (room.getGame().getGameMood() == GameMood.NIGHT_DETECTIVE)
+			if (room.getGame().player(String.valueOf(message.getFrom().getId()).trim()).getRole() == Role.DETECTIVE)
+				sendMessage(message, "help.detective", room.getLang(), true);
+			else
+				sendMessage(message, "help.wait", room.getLang(), true);
+	}
 }

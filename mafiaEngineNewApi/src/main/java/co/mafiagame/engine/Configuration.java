@@ -64,7 +64,7 @@ public final class Configuration {
             case ENDED:
                 executorService.schedule(() ->
                                 gameFinishListener.accept(game, game.gameResult()),
-                        10, TimeUnit.MILLISECONDS);
+                        4, TimeUnit.SECONDS);
         }
     }
 

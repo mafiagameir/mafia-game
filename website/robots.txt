@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /fa/donate.html
+Disallow: /fa/failed.html
+Disallow: /fa/success.html
+Disallow: /fa/lib/
+Disallow: /lib/
+Disallow: /fonts/
+Disallow: /img/

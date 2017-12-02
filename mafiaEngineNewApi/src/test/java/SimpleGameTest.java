@@ -131,7 +131,7 @@ public class SimpleGameTest {
 
         //sunrise - detective killed
         //game finished
-        Thread.sleep(1000L);
+        Thread.sleep(5000L);
         Assert.assertEquals(GameResult.MAFIAS_WIN, gameResult[0]);
 
     }
