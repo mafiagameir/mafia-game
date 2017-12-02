@@ -77,6 +77,7 @@ public class CommandController {
                                     logger.info("receive: {}", update);
                                     commandDispatcher.handleMessage(update.getMessage());
                                 } else if (Objects.nonNull(update.getCallBackQuery())) {
+                                    logger.info("receive: {}", update);
                                     commandDispatcher.handleCallback(update.getCallBackQuery());
                                 }
                                 logger.info("offset set to {}", offset);

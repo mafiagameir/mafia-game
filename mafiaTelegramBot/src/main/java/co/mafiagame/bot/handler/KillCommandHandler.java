@@ -38,7 +38,7 @@ public class KillCommandHandler extends TelegramCallbackHandler {
                 Collections.singleton(victim)));
         client.editMessageText(new EditMessageTextRequest()
                 .setChatId(callBackQuery.getMessage().getChat().getId())
-                .setMessageId(Long.valueOf(callBackQuery.getInlineMessageId()))
+                .setMessageId(callBackQuery.getMessage().getId())
                 .setReplyMarkup(new TInlineKeyboardMarkup().setInlineKeyboard(Collections.emptyList()))
                 .setText(MessageHolder.get("ok", room.getLang()))
         );
