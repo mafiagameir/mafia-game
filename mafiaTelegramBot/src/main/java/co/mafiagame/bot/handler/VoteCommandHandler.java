@@ -80,7 +80,7 @@ public class VoteCommandHandler extends TelegramCommandHandler {
         ElectionResult electionResult = room.getGame().vote(
                 new Vote(String.valueOf(message.getFrom().getId()).trim(), userVote.stream()
                         .map(Account::getTelegramUserId)
-                        .map(String::valueOf).collect(Collectors.toList())));
+                        .map(String::valueOf).collect(Collectors.toSet())));
         Account voter = room.findPlayer(message.getFrom().getId())
                 .orElseThrow(() -> new PlayerNotFoundException(
                         message.getFrom().getFirstName() + " " + message.getFrom().getLastName()));
