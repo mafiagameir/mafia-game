@@ -62,6 +62,7 @@ public final class Configuration {
                 sunriseListener.accept(game, new NightResult(game.killCandidate()));
                 break;
             case ENDED:
+                sunriseListener.accept(game, new NightResult(game.killCandidate()));
                 executorService.schedule(() ->
                                 gameFinishListener.accept(game, game.gameResult()),
                         4, TimeUnit.SECONDS);

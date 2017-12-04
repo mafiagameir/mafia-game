@@ -53,7 +53,7 @@ public class KillMeCommandHandler extends TelegramCommandHandler {
         room.getGame().externalKill(String.valueOf(message.getFrom().getId()));
         client.send(new SendMessage()
                 .setChatId(room.getRoomId())
-                .setText(MessageHolder.get("user.exit.game", room.getLang()))
+                .setText(MessageHolder.get("user.exit.game", room.getLang(),message.getFrom().getFirstName() + " " + message.getFrom().getLastName()))
         );
     }
 }

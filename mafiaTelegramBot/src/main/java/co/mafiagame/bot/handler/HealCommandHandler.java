@@ -29,7 +29,7 @@ public class HealCommandHandler extends TelegramCallbackHandler {
         if (Objects.isNull(roomId))
             throw new GameNotStartedYetException();
         Room room = gameContainer.room(roomId);
-        String target = callBackQuery.getData().substring(callBackQuery.getData().indexOf(" "));
+        String target = callBackQuery.getData().substring(callBackQuery.getData().indexOf(" ")).trim();
         room.getGame().heal(String.valueOf(callerId), target);
         client.editMessageText(new EditMessageTextRequest()
             .setText(MessageHolder.get("ok",
