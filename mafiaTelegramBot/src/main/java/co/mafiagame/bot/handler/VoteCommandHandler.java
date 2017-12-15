@@ -76,7 +76,7 @@ public class VoteCommandHandler extends TelegramCommandHandler {
     }
 
     private void handleDone(TMessage message, Room room) {
-        List<Account> userVote = votes.get(message.getFrom().getId());
+        List<Account> userVote = votes.remove(message.getFrom().getId());
         ElectionResult electionResult = room.getGame().vote(
                 new Vote(String.valueOf(message.getFrom().getId()).trim(), userVote.stream()
                         .map(Account::getTelegramUserId)
