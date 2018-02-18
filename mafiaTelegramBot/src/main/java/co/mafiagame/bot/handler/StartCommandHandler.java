@@ -197,7 +197,8 @@ public class StartCommandHandler extends TelegramCommandHandler {
 										.setKeyboard(Collections.singletonList(Collections.singletonList(
 														MessageHolder.get("register", lang)))))
 						.setChatId(message.getChat().getId())
-						.setText(MessageHolder.get("register.to.start", lang))
+						.setText(MessageHolder.get("register.to.start", lang,
+                                String.valueOf(game.getGameSetup().totalPlayer())))
 		);
 	}
 

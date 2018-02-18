@@ -64,4 +64,8 @@ public class GameSetup {
     public boolean isHasDoctor() {
         return hasDoctor;
     }
+
+    public long totalPlayer() {
+        return citizenNo + mafiaNo + (hasDetective ? 1 : 0) + (hasDoctor ? 1 : 0);
+    }
 }
