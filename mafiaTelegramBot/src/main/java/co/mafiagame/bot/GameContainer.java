@@ -7,13 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * @author Esa Hekmatizadeh
@@ -75,6 +73,19 @@ public class GameContainer {
 
     public void removeRoom(Long roomId) {
         rooms.remove(roomId);
+    }
+
+    public int roomNumber() {
+        return rooms.size();
+    }
+
+    public int playerNumber() {
+        return userRooms.size();
+    }
+
+    public List<Date> lastUpdates() {
+        return rooms.values().stream().map(room -> room.getGame().getLastUpdate())
+                .collect(Collectors.toList());
     }
 
 }
