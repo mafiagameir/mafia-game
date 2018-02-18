@@ -22,6 +22,7 @@ import co.mafiagame.bot.Room;
 import co.mafiagame.bot.telegram.SendMessage;
 import co.mafiagame.bot.telegram.TMessage;
 import co.mafiagame.engine.Constants;
+import co.mafiagame.engine.GameMood;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -54,6 +55,10 @@ public class WhatIsMyRoleCommandHandler extends TelegramCommandHandler {
             return;
         }
         Room room = gameContainer.room(roomId);
+        if (room.getGame().getGameMood() == GameMood.NOT_STARTED) {
+            sendMessage(message, "game.not.started.yet", getLang(message), false);
+            return;
+        }
         String msg = registerCommandHandler.roleMsg(room, room.findPlayer(message.getFrom().getId())
                 .orElseThrow(IllegalStateException::new));
         client.send(new SendMessage()

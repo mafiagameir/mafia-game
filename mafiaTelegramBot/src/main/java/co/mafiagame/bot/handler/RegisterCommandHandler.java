@@ -5,10 +5,7 @@ import co.mafiagame.bot.persistence.domain.Account;
 import co.mafiagame.bot.persistence.domain.Action;
 import co.mafiagame.bot.persistence.domain.Audit;
 import co.mafiagame.bot.persistence.repository.AuditRepository;
-import co.mafiagame.bot.telegram.SendMessage;
-import co.mafiagame.bot.telegram.SendMessageWithRemoveKeyboard;
-import co.mafiagame.bot.telegram.TMessage;
-import co.mafiagame.bot.telegram.TReplyKeyboardRemove;
+import co.mafiagame.bot.telegram.*;
 import co.mafiagame.bot.util.MessageHolder;
 import co.mafiagame.engine.Constants;
 import co.mafiagame.engine.GameMood;
@@ -78,11 +75,16 @@ public class RegisterCommandHandler extends TelegramCommandHandler {
 								.setDate(new Date())
 								.setRoomId(String.valueOf(room.getRoomId()))
 				);
-				client.send(new SendMessage()
-								.setChatId(a.getTelegramUserId())
-								.setText(roleMsg(room, a))
-				);
-			});
+                SendMessageResult result = client.send(new SendMessage()
+                        .setChatId(a.getTelegramUserId())
+                        .setText(roleMsg(room, a))
+                );
+                if(!result.isOk() && result.getErrorCode()==403){
+                    client.send(new SendMessage()
+                    .setChatId(room.getRoomId())
+                    .setText(MessageHolder.get("bot.has.not.access",room.getLang(),a.fullName())));
+                }
+            });
 
 		}
 	}
