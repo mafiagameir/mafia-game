@@ -79,6 +79,7 @@ public class CommandDispatcher {
             } catch (MafiaException e) {
                 logger.warn(e.getMessage(), e);
                 client.send(new SendMessage()
+                        .setChatId(message.getChat().getId())
                         .setText(MessageHolder.get(e.getMessageCode(),
                                 accountCache.get(message.getFrom().getId()).getLang(),
                                 e.getMessageArgs())));
