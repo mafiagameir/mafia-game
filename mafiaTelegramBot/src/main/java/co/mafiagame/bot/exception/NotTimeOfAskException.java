@@ -8,7 +8,7 @@ import co.mafiagame.engine.exception.MafiaException;
 public class NotTimeOfAskException extends MafiaException {
     @Override
     public String getMessageCode() {
-        return "you.cant.ask.now=you can't ask now";
+        return "you.cant.ask.now";
     }
 
     @Override
