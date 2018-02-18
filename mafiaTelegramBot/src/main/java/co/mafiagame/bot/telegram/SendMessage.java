@@ -3,6 +3,8 @@ package co.mafiagame.bot.telegram;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Objects;
+
 /**
  * @author Esa Hekmatizadeh
  */
@@ -55,10 +57,9 @@ public class SendMessage {
     @Override
     public String toString() {
         return "SendMessage{" +
-            "chatId=" + chatId +
-            ", text='" + text + '\'' +
-            ", parseMode='" + parseMode + '\'' +
-            ", replyToMessageId=" + replyToMessageId +
-            '}';
+                (Objects.isNull(chatId) ? "" : " chatId=" + chatId) +
+                (Objects.isNull(text) ? "" : " ,  text='" + text + '\'') +
+                (Objects.isNull(replyToMessageId) ? "" : " ,  replyToMessageId=" + replyToMessageId) +
+                '}';
     }
 }

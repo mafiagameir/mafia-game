@@ -3,6 +3,8 @@ package co.mafiagame.bot.telegram;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Objects;
+
 /**
  * @author Esa Hekmatizadeh
  */
@@ -74,12 +76,12 @@ public class TCallBackQuery {
     @Override
     public String toString() {
         return "TCallBackQuery{" +
-                "id='" + id + '\'' +
-                ", from=" + from +
-                ", message=" + message +
-                ", inlineMessageId='" + inlineMessageId + '\'' +
-                ", chatInstance='" + chatInstance + '\'' +
-                ", data='" + data + '\'' +
+                (Objects.isNull(id) ? "" : " id='" + id + '\'') +
+                (Objects.isNull(from) ? "" : " ,  from=" + from) +
+                (Objects.isNull(message) ? "" : " ,  message=" + message) +
+                (Objects.isNull(inlineMessageId) ? "" : " ,  inlineMessageId='" + inlineMessageId + '\'') +
+                (Objects.isNull(chatInstance) ? "" : " ,  chatInstance='" + chatInstance + '\'') +
+                (Objects.isNull(data) ? "" : " ,  data='" + data + '\'') +
                 '}';
     }
 }

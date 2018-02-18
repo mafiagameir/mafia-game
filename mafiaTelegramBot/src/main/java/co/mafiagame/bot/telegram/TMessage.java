@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author hekmatof
@@ -217,31 +218,6 @@ public class TMessage {
         this.entities = entities;
     }
 
-    @Override
-    public String toString() {
-        return "TMessage{" +
-            "id=" + id +
-            ", from=" + from +
-            ", date=" + date +
-            ", chat=" + chat +
-            ", forwardFrom=" + forwardFrom +
-            ", forwardFromChat=" + forwardFromChat +
-            ", forwardDate=" + forwardDate +
-            ", replyToMessage=" + replyToMessage +
-            ", editDate=" + editDate +
-            ", caption='" + caption + '\'' +
-            ", newChatMember=" + newChatMember +
-            ", leftChatMember=" + leftChatMember +
-            ", newChatTitle='" + newChatTitle + '\'' +
-            ", deleteChatPhoto=" + deleteChatPhoto +
-            ", groupChatCreated=" + groupChatCreated +
-            ", supergroupChatCreated=" + supergroupChatCreated +
-            ", channelChatCreated=" + channelChatCreated +
-            ", text='" + text + '\'' +
-            ", entities=" + entities +
-            '}';
-    }
-
     @JsonIgnore
     public boolean isNotCommand() {
         return StringUtils.isEmpty(text);
@@ -250,5 +226,31 @@ public class TMessage {
     @JsonIgnore
     public boolean isGroup() {
         return "group".equals(chat.getType()) || "supergroup".equals(chat.getType());
+    }
+
+    @Override
+    public String toString() {
+        return "TMessage{" +
+                (Objects.isNull(id) ? "" : " id=" + id) +
+                (Objects.isNull(from) ? "" : " ,  from=" + from) +
+                (Objects.isNull(date) ? "" : " ,  date=" + date) +
+                (Objects.isNull(chat) ? "" : " ,  chat=" + chat) +
+                (Objects.isNull(forwardFrom) ? "" : " ,  forwardFrom=" + forwardFrom) +
+                (Objects.isNull(forwardFromChat) ? "" : " ,  forwardFromChat=" + forwardFromChat) +
+                (Objects.isNull(forwardFromMessageId) ? "" : " ,  forwardFromMessageId=" + forwardFromMessageId) +
+                (Objects.isNull(forwardDate) ? "" : " ,  forwardDate=" + forwardDate) +
+                (Objects.isNull(replyToMessage) ? "" : " ,  replyToMessage=" + replyToMessage) +
+                (Objects.isNull(editDate) ? "" : " ,  editDate=" + editDate) +
+                (Objects.isNull(text) ? "" : " ,  text='" + text + '\'') +
+                (Objects.isNull(entities) ? "" : " ,  entities=" + entities) +
+                (Objects.isNull(caption) ? "" : " ,  caption='" + caption + '\'') +
+                (Objects.isNull(newChatMember) ? "" : " ,  newChatMember=" + newChatMember) +
+                (Objects.isNull(leftChatMember) ? "" : " ,  leftChatMember=" + leftChatMember) +
+                (Objects.isNull(newChatTitle) ? "" : " ,  newChatTitle='" + newChatTitle + '\'') +
+                (Objects.isNull(deleteChatPhoto) ? "" : " ,  deleteChatPhoto=" + deleteChatPhoto) +
+                (Objects.isNull(groupChatCreated) ? "" : " ,  groupChatCreated=" + groupChatCreated) +
+                (Objects.isNull(supergroupChatCreated) ? "" : " ,  supergroupChatCreated=" + supergroupChatCreated) +
+                (Objects.isNull(channelChatCreated) ? "" : " ,  channelChatCreated=" + channelChatCreated) +
+                '}';
     }
 }

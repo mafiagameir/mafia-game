@@ -20,6 +20,8 @@ package co.mafiagame.bot.telegram;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Objects;
+
 /**
  * @author hekmatof
  */
@@ -58,9 +60,9 @@ public class TUpdate {
     @Override
     public String toString() {
         return "TUpdate{" +
-                "id=" + id +
-                ", message=" + message +
-                ", callBackQuery=" + callBackQuery +
+                (Objects.isNull(id) ? "" : " id=" + id) +
+                (Objects.isNull(message) ? "" : " ,  message=" + message) +
+                (Objects.isNull(callBackQuery) ? "" : " ,  callBackQuery=" + callBackQuery) +
                 '}';
     }
 }

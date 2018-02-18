@@ -18,6 +18,8 @@
 
 package co.mafiagame.bot.telegram;
 
+import java.util.Objects;
+
 /**
  * @author Esa Hekmatizadeh
  */
@@ -71,11 +73,11 @@ public class TMessageEntity {
     @Override
     public String toString() {
         return "TMessageEntity{" +
-                "type='" + type + '\'' +
-                ", offset=" + offset +
-                ", length=" + length +
-                ", url='" + url + '\'' +
-                ", user=" + user +
+                (Objects.isNull(type) ? "" : " type='" + type + '\'') +
+                (Objects.isNull(offset) ? "" : " ,  offset=" + offset) +
+                (Objects.isNull(length) ? "" : " ,  length=" + length) +
+                (Objects.isNull(url) ? "" : " ,  url='" + url + '\'') +
+                (Objects.isNull(user) ? "" : " ,  user=" + user) +
                 '}';
     }
 }

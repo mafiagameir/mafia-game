@@ -22,6 +22,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.util.StringUtils;
 
+import java.util.Objects;
+
 /**
  * @author Esa Hekmatizadeh
  */
@@ -73,10 +75,10 @@ public class TUser {
     @Override
     public String toString() {
         return "TUser{" +
-            "id=" + id +
-            ", firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            ", username='" + username + '\'' +
-            '}';
+                (Objects.isNull(id) ? "" : " id=" + id) +
+                (Objects.isNull(firstName) ? "" : " ,  firstName='" + firstName + '\'') +
+                (Objects.isNull(lastName) ? "" : " ,  lastName='" + lastName + '\'') +
+                (Objects.isNull(username) ? "" : " ,  username='" + username + '\'') +
+                '}';
     }
 }
