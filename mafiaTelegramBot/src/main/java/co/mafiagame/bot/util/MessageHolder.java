@@ -25,6 +25,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Properties;
+import java.util.regex.Matcher;
 
 /**
  * @author hekmatof
@@ -55,7 +56,8 @@ public class MessageHolder {
                 value = properties.getProperty(key);
             if (args != null)
                 for (String arg : args) {
-                    value = value.replaceFirst("%", arg);
+                    value = value.replaceFirst(Matcher.quoteReplacement("%"),
+														Matcher.quoteReplacement(arg));
                 }
             return value;
         } catch (NullPointerException e) {
