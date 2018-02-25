@@ -75,16 +75,16 @@ public class RegisterCommandHandler extends TelegramCommandHandler {
 								.setDate(new Date())
 								.setRoomId(String.valueOf(room.getRoomId()))
 				);
-                SendMessageResult result = client.send(new SendMessage()
-                        .setChatId(a.getTelegramUserId())
-                        .setText(roleMsg(room, a))
-                );
-                if(!result.isOk() && result.getErrorCode()==403){
-                    client.send(new SendMessage()
-                    .setChatId(room.getRoomId())
-                    .setText(MessageHolder.get("bot.has.not.access",room.getLang(),a.fullName())));
-                }
-            });
+				SendMessageResult result = client.send(new SendMessage()
+								.setChatId(a.getTelegramUserId())
+								.setText(roleMsg(room, a))
+				);
+				if (!result.isOk() && result.getErrorCode() == 403) {
+					client.send(new SendMessage()
+									.setChatId(room.getRoomId())
+									.setText(MessageHolder.get("bot.has.not.access", room.getLang(), a.fullName())));
+				}
+			});
 
 		}
 	}
@@ -115,6 +115,6 @@ public class RegisterCommandHandler extends TelegramCommandHandler {
 																.collect(Collectors.joining(
 																				MessageHolder.get("and", room.getLang()))));
 		}
-        return MessageHolder.get("your.dead",room.getLang());
+		return MessageHolder.get("your.dead", room.getLang());
 	}
 }

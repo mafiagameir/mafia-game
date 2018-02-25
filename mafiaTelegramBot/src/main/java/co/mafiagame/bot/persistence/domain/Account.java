@@ -24,8 +24,7 @@ import co.mafiagame.bot.util.MessageHolder;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.UUID;
+import java.util.regex.Matcher;
 
 /**
  * @author hekmatof
@@ -56,8 +55,8 @@ public class Account {
 
     @Transient
     public String fullName() {
-        return (StringUtils.isEmpty(firstName) ? "" : firstName) +
-            " " + (StringUtils.isEmpty(lastName) ? "" : lastName);
+        return Matcher.quoteReplacement((StringUtils.isEmpty(firstName) ? "" : firstName) +
+            " " + (StringUtils.isEmpty(lastName) ? "" : lastName));
     }
 
     public Long getId() {
