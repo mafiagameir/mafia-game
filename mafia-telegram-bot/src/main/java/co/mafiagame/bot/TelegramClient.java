@@ -22,6 +22,7 @@ import co.mafiagame.bot.telegram.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
@@ -40,7 +41,8 @@ public class TelegramClient {
     private String telegramUrl;
     @Value("${mafia.telegram.token}")
     private String telegramToken;
-    private RestTemplate restTemplate = new RestTemplate();
+    @Autowired
+    private RestTemplate restTemplate;
     private ObjectMapper mapper;
 
     public SendMessageResult send(SendMessage message) {

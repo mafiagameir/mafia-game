@@ -18,15 +18,13 @@
 
 package co.mafiagame.bot;
 
-import org.ehcache.CacheManager;
-import org.ehcache.config.builders.CacheManagerBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @author hekmatof
@@ -34,21 +32,12 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackages = "co.mafiagame")
 @Configuration
 @EnableAutoConfiguration
+@EnableScheduling
 public class Launcher {
     private static final Logger logger = LoggerFactory.getLogger(Launcher.class);
 
     public static void main(String[] args) {
-        SpringApplication.run(new Object[]{Launcher.class}, args);
+        SpringApplication.run(Launcher.class, args);
         logger.info("application started");
     }
-
-    @Bean
-    public CacheManager cacheManager() {
-        CacheManager cacheManager
-            = CacheManagerBuilder.newCacheManagerBuilder()
-            .build();
-        cacheManager.init();
-        return cacheManager;
-    }
-
 }

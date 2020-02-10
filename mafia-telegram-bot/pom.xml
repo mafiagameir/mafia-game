@@ -6,12 +6,12 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.1.RELEASE</version>
+    <version>2.2.4.RELEASE</version>
   </parent>
 
   <groupId>co.mafiagame</groupId>
   <artifactId>mafia-telegram-bot</artifactId>
-  <version>2.0-SNAPSHOT</version>
+  <version>2.1-SNAPSHOT</version>
   <name>Mafia Telegram Bot</name>
   <description>Mafia game Telegram bot</description>
   <url>https://mafiagame.ir</url>
@@ -64,7 +64,7 @@
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
-      <version>9.2-1003-jdbc4</version>
+      <version>42.2.10</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>

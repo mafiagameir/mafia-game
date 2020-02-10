@@ -50,12 +50,16 @@ public class CommandDispatcher {
     private ExecutorService executorService =
             new ThreadPoolExecutor(5, 10, 5,
                     TimeUnit.MINUTES, new LinkedBlockingQueue<>(40));
-    @Autowired
-    private TelegramClient client;
-    @Autowired
-    private AccountCache accountCache;
+    private final TelegramClient client;
+    private final AccountCache accountCache;
 
-    public static String removeSlash(String message) {
+	@Autowired
+	public CommandDispatcher(TelegramClient client, AccountCache accountCache) {
+		this.client = client;
+		this.accountCache = accountCache;
+	}
+
+	public static String removeSlash(String message) {
         if (message.startsWith("/"))
             return message.substring(1).toLowerCase();
         else

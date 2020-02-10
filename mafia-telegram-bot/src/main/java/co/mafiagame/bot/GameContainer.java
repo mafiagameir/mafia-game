@@ -24,6 +24,7 @@ import co.mafiagame.bot.persistence.repository.AuditRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -50,6 +51,7 @@ public class GameContainer {
 		sExecutorService.scheduleAtFixedRate(this::cleanUp, 1, 24, TimeUnit.HOURS);
 	}
 
+	@Scheduled(cron = "0 0 12 0/1 * *")
 	private void cleanUp() {
 		log.info("clean-up is going to run...");
 		Calendar cal = Calendar.getInstance();

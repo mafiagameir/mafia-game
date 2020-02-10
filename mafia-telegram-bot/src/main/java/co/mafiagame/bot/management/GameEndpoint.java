@@ -21,23 +21,22 @@ package co.mafiagame.bot.management;
 
 import co.mafiagame.bot.GameContainer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.endpoint.AbstractEndpoint;
+import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
+import org.springframework.boot.actuate.endpoint.web.annotation.WebEndpoint;
 import org.springframework.stereotype.Component;
 
 /**
  * @author Esa Hekmatizadeh
  */
+@WebEndpoint(id = "bot")
 @Component
-public class GameEndpoint extends AbstractEndpoint<BotStatus> {
+public class GameEndpoint {
+
     @Autowired
     private GameContainer container;
 
-    public GameEndpoint() {
-        super("bot", false, true);
-    }
-
-    @Override
-    public BotStatus invoke() {
+    @ReadOperation(produces = {})
+    public BotStatus botStatus() {
         return new BotStatus()
                 .setPlayingGames(container.roomNumber())
                 .setPlayingPlayers(container.playerNumber())
