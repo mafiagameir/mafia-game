@@ -24,79 +24,79 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author hekmatof
  */
 public class TChat {
-    private Long id;
-    private String type;
-    private String title;
-    private String username;
-    @JsonProperty("first_name")
-    private String firstName;
-    @JsonProperty("last_name")
-    private String lastName;
-    @JsonProperty("all_members_are_administrators")
-    private String allMembersAreAdmins;
+	private Long id;
+	private String type;
+	private String title;
+	private String username;
+	@JsonProperty("first_name")
+	private String firstName;
+	@JsonProperty("last_name")
+	private String lastName;
+	@JsonProperty("all_members_are_administrators")
+	private String allMembersAreAdmins;
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getFirstName() {
-        return firstName;
-    }
+	public String getFirstName() {
+		return firstName;
+	}
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-    public String getLastName() {
-        return lastName;
-    }
+	public String getLastName() {
+		return lastName;
+	}
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
-    public String getUsername() {
-        return username;
-    }
+	public String getUsername() {
+		return username;
+	}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public String getType() {
-        return type;
-    }
+	public String getType() {
+		return type;
+	}
 
-    public void setType(String type) {
-        this.type = type;
-    }
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    public String getAllMembersAreAdmins() {
-        return allMembersAreAdmins;
-    }
+	public String getAllMembersAreAdmins() {
+		return allMembersAreAdmins;
+	}
 
-    public TChat setAllMembersAreAdmins(String allMembersAreAdmins) {
-        this.allMembersAreAdmins = allMembersAreAdmins;
-        return this;
-    }
+	public TChat setAllMembersAreAdmins(String allMembersAreAdmins) {
+		this.allMembersAreAdmins = allMembersAreAdmins;
+		return this;
+	}
 
-    @Override
-    public String toString() {
-        if ("private".equals(type))
-            return "Private Chat " + id + " (" + username + "-" + firstName + " " + lastName + ")";
-        else
-            return "Group Chat " + id + "(" + title + ")";
-    }
+	@Override
+	public String toString() {
+		if ("private".equals(type))
+			return "Private Chat " + id + " (" + username + "-" + firstName + " " + lastName + ")";
+		else
+			return "Group Chat " + id + "(" + title + ")";
+	}
 }

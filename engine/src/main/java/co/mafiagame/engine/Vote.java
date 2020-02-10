@@ -31,34 +31,34 @@ import java.util.Objects;
  * @author Esa Hekmatizadeh
  */
 public class Vote {
-    private final String voterUserId;
-    private final List<String> candidateUserIds = new ArrayList<>();
+	private final String voterUserId;
+	private final List<String> candidateUserIds = new ArrayList<>();
 
-    public Vote(String voterUserId, Collection<String> candidateUserIds) {
-        if (Objects.isNull(voterUserId))
-            throw new IllegalArgumentException("voter object is null");
-        this.voterUserId = voterUserId;
-        this.candidateUserIds.addAll(candidateUserIds);
-    }
+	public Vote(String voterUserId, Collection<String> candidateUserIds) {
+		if (Objects.isNull(voterUserId))
+			throw new IllegalArgumentException("voter object is null");
+		this.voterUserId = voterUserId;
+		this.candidateUserIds.addAll(candidateUserIds);
+	}
 
-    public String getVoterUserId() {
-        return voterUserId;
-    }
+	public String getVoterUserId() {
+		return voterUserId;
+	}
 
-    public List<String> getCandidateUserIds() {
-        return candidateUserIds;
-    }
+	public List<String> getCandidateUserIds() {
+		return candidateUserIds;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Vote vote = (Vote) o;
-        return Objects.equals(voterUserId, vote.voterUserId);
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Vote vote = (Vote) o;
+		return Objects.equals(voterUserId, vote.voterUserId);
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(voterUserId);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(voterUserId);
+	}
 }

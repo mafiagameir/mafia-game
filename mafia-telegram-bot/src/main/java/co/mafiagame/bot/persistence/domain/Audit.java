@@ -26,60 +26,60 @@ import java.util.Date;
  */
 @Entity
 public class Audit {
-    @Id
-    @GeneratedValue(generator = "sequence", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "sequence", allocationSize = 10)
-    private Long id;
-    @ManyToOne
-    private Account actor;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
-    private String roomId;
-    @Enumerated(EnumType.STRING)
-    private Action action;
+	@Id
+	@GeneratedValue(generator = "sequence", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "sequence", allocationSize = 10)
+	private Long id;
+	@ManyToOne
+	private Account actor;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date date;
+	private String roomId;
+	@Enumerated(EnumType.STRING)
+	private Action action;
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public Audit setId(Long id) {
-        this.id = id;
-        return this;
-    }
+	public Audit setId(Long id) {
+		this.id = id;
+		return this;
+	}
 
-    public Account getActor() {
-        return actor;
-    }
+	public Account getActor() {
+		return actor;
+	}
 
-    public Audit setActor(Account actor) {
-        this.actor = actor;
-        return this;
-    }
+	public Audit setActor(Account actor) {
+		this.actor = actor;
+		return this;
+	}
 
-    public Date getDate() {
-        return date;
-    }
+	public Date getDate() {
+		return date;
+	}
 
-    public Audit setDate(Date date) {
-        this.date = date;
-        return this;
-    }
+	public Audit setDate(Date date) {
+		this.date = date;
+		return this;
+	}
 
-    public String getRoomId() {
-        return roomId;
-    }
+	public String getRoomId() {
+		return roomId;
+	}
 
-    public Audit setRoomId(String roomId) {
-        this.roomId = roomId;
-        return this;
-    }
+	public Audit setRoomId(String roomId) {
+		this.roomId = roomId;
+		return this;
+	}
 
-    public Action getAction() {
-        return action;
-    }
+	public Action getAction() {
+		return action;
+	}
 
-    public Audit setAction(Action action) {
-        this.action = action;
-        return this;
-    }
+	public Audit setAction(Action action) {
+		this.action = action;
+		return this;
+	}
 }

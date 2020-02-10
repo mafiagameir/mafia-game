@@ -35,34 +35,34 @@ import java.util.Objects;
  */
 @Component
 public class AccountCache {
-    @Autowired
-    private CacheManager cacheManager;
-    @Autowired
-    private AccountRepository accountRepository;
+	@Autowired
+	private CacheManager cacheManager;
+	@Autowired
+	private AccountRepository accountRepository;
 
-    private Cache<Long, Account> accountCache;
+	private Cache<Long, Account> accountCache;
 
 
-    @PostConstruct
-    public void init() {
-        accountCache = cacheManager.createCache("accountCache",
-                CacheConfigurationBuilder.newCacheConfigurationBuilder(Long.class, Account.class,
-                        ResourcePoolsBuilder.heap(1000)));
+	@PostConstruct
+	public void init() {
+		accountCache = cacheManager.createCache("accountCache",
+				CacheConfigurationBuilder.newCacheConfigurationBuilder(Long.class, Account.class,
+						ResourcePoolsBuilder.heap(1000)));
 
-    }
+	}
 
-    public void put(Long userId, Account account) {
-        accountCache.put(userId, account);
-    }
+	public void put(Long userId, Account account) {
+		accountCache.put(userId, account);
+	}
 
-    public Account get(Long userId) {
-        Account account = accountCache.get(userId);
-        if (Objects.isNull(account)) {
-            account = accountRepository.findByTelegramUserId(userId);
-            if (Objects.nonNull(account))
-                put(account.getTelegramUserId(), account);
-        }
-        return account;
-    }
+	public Account get(Long userId) {
+		Account account = accountCache.get(userId);
+		if (Objects.isNull(account)) {
+			account = accountRepository.findByTelegramUserId(userId);
+			if (Objects.nonNull(account))
+				put(account.getTelegramUserId(), account);
+		}
+		return account;
+	}
 
 }

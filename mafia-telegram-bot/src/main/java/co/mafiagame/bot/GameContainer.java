@@ -57,16 +57,16 @@ public class GameContainer {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.HOUR, -5);
 		List<Room> roomToDelete = rooms.values().stream()
-						.filter(room -> room.getGame().getLastUpdate().before(cal.getTime()))
-						.collect(Collectors.toList());
+				.filter(room -> room.getGame().getLastUpdate().before(cal.getTime()))
+				.collect(Collectors.toList());
 		log.info("removing {} games for timeout...", roomToDelete.size());
 		roomToDelete.forEach(room -> {
 			room.getAccounts().forEach(a -> {
 				auditRepository.save(new Audit()
-								.setAction(Action.GAME_TIMEOUT)
-								.setActor(a)
-								.setDate(new Date())
-								.setRoomId(String.valueOf(room.getRoomId())));
+						.setAction(Action.GAME_TIMEOUT)
+						.setActor(a)
+						.setDate(new Date())
+						.setRoomId(String.valueOf(room.getRoomId())));
 				removeUser(a.getTelegramUserId());
 			});
 			removeRoom(Long.valueOf(room.getGame().getGameId()));
@@ -108,7 +108,7 @@ public class GameContainer {
 
 	public List<Date> lastUpdates() {
 		return rooms.values().stream().map(room -> room.getGame().getLastUpdate())
-						.collect(Collectors.toList());
+				.collect(Collectors.toList());
 	}
 
 }

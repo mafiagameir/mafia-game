@@ -32,79 +32,79 @@ import java.util.function.Consumer;
  * @author Esa Hekmatizadeh
  */
 public final class Configuration {
-    private final BiConsumer<Game, NightResult> sunriseListener;
-    private final BiConsumer<Game, GameResult> gameFinishListener;
-    private final Consumer<Game> mafiaTurnListener;
-    private final Consumer<Game> doctorTurnListener;
-    private final Consumer<Game> detectiveTurnListener;
-    private final ScheduledExecutorService executorService = new ScheduledThreadPoolExecutor(1);
+	private final BiConsumer<Game, NightResult> sunriseListener;
+	private final BiConsumer<Game, GameResult> gameFinishListener;
+	private final Consumer<Game> mafiaTurnListener;
+	private final Consumer<Game> doctorTurnListener;
+	private final Consumer<Game> detectiveTurnListener;
+	private final ScheduledExecutorService executorService = new ScheduledThreadPoolExecutor(1);
 
 
-    private Configuration(Builder builder) {
-        this.sunriseListener = builder.sunriseListener;
-        this.gameFinishListener = builder.gameFinishListener;
-        this.mafiaTurnListener = builder.mafiaTurnListener;
-        this.doctorTurnListener = builder.doctorTurnListener;
-        this.detectiveTurnListener = builder.detectiveTurnListener;
-    }
+	private Configuration(Builder builder) {
+		this.sunriseListener = builder.sunriseListener;
+		this.gameFinishListener = builder.gameFinishListener;
+		this.mafiaTurnListener = builder.mafiaTurnListener;
+		this.doctorTurnListener = builder.doctorTurnListener;
+		this.detectiveTurnListener = builder.detectiveTurnListener;
+	}
 
-    void changeTurn(Game game) {
-        switch (game.getGameMood()) {
-            case NIGHT_MAFIA:
-                mafiaTurnListener.accept(game);
-                break;
-            case NIGHT_DETECTIVE:
-                detectiveTurnListener.accept(game);
-                break;
-            case NIGHT_DOCTOR:
-                doctorTurnListener.accept(game);
-                break;
-            case DAY:
-                sunriseListener.accept(game, new NightResult(game.killCandidate()));
-                break;
-            case ENDED:
-                if (Objects.nonNull(game.killCandidate()))
-                    sunriseListener.accept(game, new NightResult(game.killCandidate()));
-                executorService.schedule(() ->
-                                gameFinishListener.accept(game, game.gameResult()),
-                        4, TimeUnit.SECONDS);
-        }
-    }
+	void changeTurn(Game game) {
+		switch (game.getGameMood()) {
+			case NIGHT_MAFIA:
+				mafiaTurnListener.accept(game);
+				break;
+			case NIGHT_DETECTIVE:
+				detectiveTurnListener.accept(game);
+				break;
+			case NIGHT_DOCTOR:
+				doctorTurnListener.accept(game);
+				break;
+			case DAY:
+				sunriseListener.accept(game, new NightResult(game.killCandidate()));
+				break;
+			case ENDED:
+				if (Objects.nonNull(game.killCandidate()))
+					sunriseListener.accept(game, new NightResult(game.killCandidate()));
+				executorService.schedule(() ->
+								gameFinishListener.accept(game, game.gameResult()),
+						4, TimeUnit.SECONDS);
+		}
+	}
 
-    public static class Builder {
-        private BiConsumer<Game, NightResult> sunriseListener;
-        private BiConsumer<Game, GameResult> gameFinishListener;
-        private Consumer<Game> mafiaTurnListener;
-        private Consumer<Game> doctorTurnListener;
-        private Consumer<Game> detectiveTurnListener;
+	public static class Builder {
+		private BiConsumer<Game, NightResult> sunriseListener;
+		private BiConsumer<Game, GameResult> gameFinishListener;
+		private Consumer<Game> mafiaTurnListener;
+		private Consumer<Game> doctorTurnListener;
+		private Consumer<Game> detectiveTurnListener;
 
-        public Builder registerSunriseListener(BiConsumer<Game, NightResult> sunriseListener) {
-            this.sunriseListener = sunriseListener;
-            return this;
-        }
+		public Builder registerSunriseListener(BiConsumer<Game, NightResult> sunriseListener) {
+			this.sunriseListener = sunriseListener;
+			return this;
+		}
 
-        public Builder registerMafiaTurnListener(Consumer<Game> mafiaTurnListener) {
-            this.mafiaTurnListener = mafiaTurnListener;
-            return this;
-        }
+		public Builder registerMafiaTurnListener(Consumer<Game> mafiaTurnListener) {
+			this.mafiaTurnListener = mafiaTurnListener;
+			return this;
+		}
 
-        public Builder registerDoctorTurnListener(Consumer<Game> doctorTurnListener) {
-            this.doctorTurnListener = doctorTurnListener;
-            return this;
-        }
+		public Builder registerDoctorTurnListener(Consumer<Game> doctorTurnListener) {
+			this.doctorTurnListener = doctorTurnListener;
+			return this;
+		}
 
-        public Builder registerDetectiveTurnListener(Consumer<Game> detectiveTurnListener) {
-            this.detectiveTurnListener = detectiveTurnListener;
-            return this;
-        }
+		public Builder registerDetectiveTurnListener(Consumer<Game> detectiveTurnListener) {
+			this.detectiveTurnListener = detectiveTurnListener;
+			return this;
+		}
 
-        public Builder registerGameFinishListener(BiConsumer<Game, GameResult> gameFinishListener) {
-            this.gameFinishListener = gameFinishListener;
-            return this;
-        }
+		public Builder registerGameFinishListener(BiConsumer<Game, GameResult> gameFinishListener) {
+			this.gameFinishListener = gameFinishListener;
+			return this;
+		}
 
-        public Configuration build() {
-            return new Configuration(this);
-        }
-    }
+		public Configuration build() {
+			return new Configuration(this);
+		}
+	}
 }

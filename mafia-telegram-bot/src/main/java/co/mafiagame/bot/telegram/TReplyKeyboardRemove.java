@@ -24,16 +24,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Esa Hekmatizadeh
  */
 public class TReplyKeyboardRemove {
-    @JsonProperty("remove_keyboard")
-    private boolean removeKeyboard = true;
-    private boolean selective = true;
+	@JsonProperty("remove_keyboard")
+	private boolean removeKeyboard = true;
+	private boolean selective = true;
 
-    public boolean isSelective() {
-        return selective;
-    }
+	public boolean isSelective() {
+		return selective;
+	}
 
-    public TReplyKeyboardRemove setSelective(boolean selective) {
-        this.selective = selective;
-        return this;
-    }
+	public TReplyKeyboardRemove setSelective(boolean selective) {
+		this.selective = selective;
+		return this;
+	}
 }

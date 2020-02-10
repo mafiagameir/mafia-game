@@ -22,7 +22,7 @@ package co.mafiagame.engine.exception;
  * @author Esa Hekmatizadeh
  */
 public abstract class MafiaException extends RuntimeException {
-    public abstract String getMessageCode();
+	public abstract String getMessageCode();
 
-    public abstract String[] getMessageArgs();
+	public abstract String[] getMessageArgs();
 }

@@ -23,14 +23,14 @@ package co.mafiagame.engine.exception;
  */
 public class YouAreNotDoctorException extends MafiaException {
 
-    @Override
-    public String getMessageCode() {
-        return "you.are.not.doctor";
-    }
+	@Override
+	public String getMessageCode() {
+		return "you.are.not.doctor";
+	}
 
-    @Override
-    public String[] getMessageArgs() {
-        return new String[0];
-    }
+	@Override
+	public String[] getMessageArgs() {
+		return new String[0];
+	}
 
 }

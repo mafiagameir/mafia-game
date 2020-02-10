@@ -32,14 +32,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class GameEndpoint {
 
-    @Autowired
-    private GameContainer container;
+	@Autowired
+	private GameContainer container;
 
-    @ReadOperation(produces = {})
-    public BotStatus botStatus() {
-        return new BotStatus()
-                .setPlayingGames(container.roomNumber())
-                .setPlayingPlayers(container.playerNumber())
-                .setLastUpdates(container.lastUpdates());
-    }
+	@ReadOperation(produces = {})
+	public BotStatus botStatus() {
+		return new BotStatus()
+				.setPlayingGames(container.roomNumber())
+				.setPlayingPlayers(container.playerNumber())
+				.setLastUpdates(container.lastUpdates());
+	}
 }

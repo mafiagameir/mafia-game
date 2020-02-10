@@ -125,9 +125,9 @@ class GameState {
 	@Override
 	public String toString() {
 		return "(totalPlayer:" + totalPlayer() +
-						", citizenNo=" + citizenNo +
-						", mafiaNo=" + mafiaNo +
-						", hasDetective=" + hasDetective +
-						", hasDoctor=" + hasDoctor + ')';
+				", citizenNo=" + citizenNo +
+				", mafiaNo=" + mafiaNo +
+				", hasDetective=" + hasDetective +
+				", hasDoctor=" + hasDoctor + ')';
 	}
 }

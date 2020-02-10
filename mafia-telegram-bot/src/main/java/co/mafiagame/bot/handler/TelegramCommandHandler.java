@@ -18,7 +18,10 @@
 
 package co.mafiagame.bot.handler;
 
-import co.mafiagame.bot.*;
+import co.mafiagame.bot.AccountCache;
+import co.mafiagame.bot.CommandDispatcher;
+import co.mafiagame.bot.GameContainer;
+import co.mafiagame.bot.TelegramClient;
 import co.mafiagame.bot.persistence.domain.Account;
 import co.mafiagame.bot.persistence.repository.AccountRepository;
 import co.mafiagame.bot.telegram.SendMessage;
@@ -34,40 +37,40 @@ import java.util.Objects;
  * @author Esa Hekmatizadeh
  */
 public abstract class TelegramCommandHandler {
-    @Autowired
-    private CommandDispatcher commandDispatcher;
-    @Autowired
-    protected TelegramClient client;
-    @Autowired
-    protected AccountRepository accountRepository;
-    @Autowired
-    protected AccountCache accountCache;
-    @Autowired
-    protected GameContainer gameContainer;
+	@Autowired
+	private CommandDispatcher commandDispatcher;
+	@Autowired
+	protected TelegramClient client;
+	@Autowired
+	protected AccountRepository accountRepository;
+	@Autowired
+	protected AccountCache accountCache;
+	@Autowired
+	protected GameContainer gameContainer;
 
-    @PostConstruct
-    protected final void init() {
-        getCommandString().forEach(command ->
-                commandDispatcher.registerCommandHandler(command.toLowerCase(), this));
-    }
+	@PostConstruct
+	protected final void init() {
+		getCommandString().forEach(command ->
+				commandDispatcher.registerCommandHandler(command.toLowerCase(), this));
+	}
 
-    protected abstract Collection<String> getCommandString();
+	protected abstract Collection<String> getCommandString();
 
-    public abstract void execute(TMessage message);
+	public abstract void execute(TMessage message);
 
-    protected void sendMessage(TMessage message, String code, MessageHolder.Lang lang, boolean reply) {
-        client.send(new SendMessage()
-                .setText(MessageHolder.get(code, lang))
-                .setChatId(message.getChat().getId())
-                .setReplyToMessageId(reply ? message.getId() : null)
-        );
-    }
+	protected void sendMessage(TMessage message, String code, MessageHolder.Lang lang, boolean reply) {
+		client.send(new SendMessage()
+				.setText(MessageHolder.get(code, lang))
+				.setChatId(message.getChat().getId())
+				.setReplyToMessageId(reply ? message.getId() : null)
+		);
+	}
 
-    protected MessageHolder.Lang getLang(TMessage message) {
-        Account account = accountCache.get(message.getFrom().getId());
-        MessageHolder.Lang lang = MessageHolder.Lang.EN;
-        if (Objects.nonNull(account))
-            lang = account.getLang();
-        return lang;
-    }
+	protected MessageHolder.Lang getLang(TMessage message) {
+		Account account = accountCache.get(message.getFrom().getId());
+		MessageHolder.Lang lang = MessageHolder.Lang.EN;
+		if (Objects.nonNull(account))
+			lang = account.getLang();
+		return lang;
+	}
 }

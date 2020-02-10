@@ -34,10 +34,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableAutoConfiguration
 @EnableScheduling
 public class Launcher {
-    private static final Logger logger = LoggerFactory.getLogger(Launcher.class);
+	private static final Logger logger = LoggerFactory.getLogger(Launcher.class);
 
-    public static void main(String[] args) {
-        SpringApplication.run(Launcher.class, args);
-        logger.info("application started");
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(Launcher.class, args);
+		logger.info("application started");
+	}
 }

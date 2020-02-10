@@ -25,47 +25,47 @@ import java.util.Map;
  * @author Esa Hekmatizadeh
  */
 public class GameSetup {
-    private final long citizenNo;
-    private final long mafiaNo;
-    private final boolean hasDetective;
-    private final boolean hasDoctor;
-    private final Map<String, Role> players = new HashMap<>();
+	private final long citizenNo;
+	private final long mafiaNo;
+	private final boolean hasDetective;
+	private final boolean hasDoctor;
+	private final Map<String, Role> players = new HashMap<>();
 
-    GameSetup(long citizenNo, long mafiaNo, boolean hasDetective, boolean hasDoctor) {
-        this.citizenNo = citizenNo;
-        this.mafiaNo = mafiaNo;
-        this.hasDetective = hasDetective;
-        this.hasDoctor = hasDoctor;
-    }
+	GameSetup(long citizenNo, long mafiaNo, boolean hasDetective, boolean hasDoctor) {
+		this.citizenNo = citizenNo;
+		this.mafiaNo = mafiaNo;
+		this.hasDetective = hasDetective;
+		this.hasDoctor = hasDoctor;
+	}
 
 
-    void setPlayerRole(Player player) {
-        players.put(player.getUserId(), player.getRole());
-    }
+	void setPlayerRole(Player player) {
+		players.put(player.getUserId(), player.getRole());
+	}
 
-    public Map<String, Role> getPlayers() {
-        Map<String, Role> copy = new HashMap<>();
-        copy.putAll(players);
-        return copy;
-    }
+	public Map<String, Role> getPlayers() {
+		Map<String, Role> copy = new HashMap<>();
+		copy.putAll(players);
+		return copy;
+	}
 
-    public long getCitizenNo() {
-        return citizenNo;
-    }
+	public long getCitizenNo() {
+		return citizenNo;
+	}
 
-    public long getMafiaNo() {
-        return mafiaNo;
-    }
+	public long getMafiaNo() {
+		return mafiaNo;
+	}
 
-    public boolean isHasDetective() {
-        return hasDetective;
-    }
+	public boolean isHasDetective() {
+		return hasDetective;
+	}
 
-    public boolean isHasDoctor() {
-        return hasDoctor;
-    }
+	public boolean isHasDoctor() {
+		return hasDoctor;
+	}
 
-    public long totalPlayer() {
-        return citizenNo + mafiaNo + (hasDetective ? 1 : 0) + (hasDoctor ? 1 : 0);
-    }
+	public long totalPlayer() {
+		return citizenNo + mafiaNo + (hasDetective ? 1 : 0) + (hasDoctor ? 1 : 0);
+	}
 }

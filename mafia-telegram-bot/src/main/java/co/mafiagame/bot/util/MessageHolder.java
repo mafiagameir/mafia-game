@@ -31,47 +31,47 @@ import java.util.Properties;
  */
 @Component
 public class MessageHolder {
-    private static final Logger logger = LoggerFactory.getLogger(MessageHolder.class);
-    private static final Properties properties = new Properties();
-    private static final Properties propertiesFa = new Properties();
+	private static final Logger logger = LoggerFactory.getLogger(MessageHolder.class);
+	private static final Properties properties = new Properties();
+	private static final Properties propertiesFa = new Properties();
 
-    static {
-        try {
-            properties.load(MessageHolder.class.getClassLoader()
-                    .getResourceAsStream(BotConstants.CONF.MESSAGE_FILE + "en" + ".properties"));
-            propertiesFa.load(MessageHolder.class.getClassLoader()
-                    .getResourceAsStream(BotConstants.CONF.MESSAGE_FILE + "fa" + ".properties"));
-        } catch (IOException e) {
-            logger.error("could not load message properties", e);
-        }
-    }
+	static {
+		try {
+			properties.load(MessageHolder.class.getClassLoader()
+					.getResourceAsStream(BotConstants.CONF.MESSAGE_FILE + "en" + ".properties"));
+			propertiesFa.load(MessageHolder.class.getClassLoader()
+					.getResourceAsStream(BotConstants.CONF.MESSAGE_FILE + "fa" + ".properties"));
+		} catch (IOException e) {
+			logger.error("could not load message properties", e);
+		}
+	}
 
-    public static String get(String key, Lang lang, String... args) {
-        try {
-            String value;
-            if (lang == Lang.FA)
-                value = propertiesFa.getProperty(key);
-            else
-                value = properties.getProperty(key);
-            if (args != null)
-                for (String arg : args) {
-                    value = value.replaceFirst("%", arg);
-                }
-            return value;
-        } catch (NullPointerException e) {
-            logger.error("message with key {} not found", key);
-            return key + Arrays.toString(args);
-        }
-    }
+	public static String get(String key, Lang lang, String... args) {
+		try {
+			String value;
+			if (lang == Lang.FA)
+				value = propertiesFa.getProperty(key);
+			else
+				value = properties.getProperty(key);
+			if (args != null)
+				for (String arg : args) {
+					value = value.replaceFirst("%", arg);
+				}
+			return value;
+		} catch (NullPointerException e) {
+			logger.error("message with key {} not found", key);
+			return key + Arrays.toString(args);
+		}
+	}
 
-    public enum Lang {
-        EN, FA;
+	public enum Lang {
+		EN, FA;
 
-        public String lang() {
-            if (this == FA)
-                return "فارسی";
-            else
-                return "english";
-        }
-    }
+		public String lang() {
+			if (this == FA)
+				return "فارسی";
+			else
+				return "english";
+		}
+	}
 }

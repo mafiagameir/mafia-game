@@ -22,6 +22,6 @@ package co.mafiagame.engine;
  * @author Esa Hekmatizadeh
  */
 public enum Role {
-    CITIZEN, MAFIA, DETECTIVE, DOCTOR, UNKNOWN
+	CITIZEN, MAFIA, DETECTIVE, DOCTOR, UNKNOWN
 }
 

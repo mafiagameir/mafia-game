@@ -22,13 +22,13 @@ package co.mafiagame.engine.exception;
  * @author hekmatof
  */
 public class YouAreNotDetectiveException extends MafiaException {
-    @Override
-    public String getMessageCode() {
-        return "you.are.not.detective";
-    }
+	@Override
+	public String getMessageCode() {
+		return "you.are.not.detective";
+	}
 
-    @Override
-    public String[] getMessageArgs() {
-        return new String[0];
-    }
+	@Override
+	public String[] getMessageArgs() {
+		return new String[0];
+	}
 }

@@ -23,7 +23,6 @@ import co.mafiagame.bot.CommandDispatcher;
 import co.mafiagame.bot.GameContainer;
 import co.mafiagame.bot.TelegramClient;
 import co.mafiagame.bot.telegram.TCallBackQuery;
-import co.mafiagame.bot.telegram.TMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
@@ -32,22 +31,22 @@ import javax.annotation.PostConstruct;
  * @author Esa Hekmatizadeh
  */
 public abstract class TelegramCallbackHandler {
-    @Autowired
-    private CommandDispatcher commandDispatcher;
-    @Autowired
-    protected TelegramClient client;
-    @Autowired
-    protected AccountCache accountCache;
-    @Autowired
-    protected GameContainer gameContainer;
+	@Autowired
+	private CommandDispatcher commandDispatcher;
+	@Autowired
+	protected TelegramClient client;
+	@Autowired
+	protected AccountCache accountCache;
+	@Autowired
+	protected GameContainer gameContainer;
 
-    @PostConstruct
-    protected final void init() {
-        commandDispatcher.registerCallbackHandler(getCommandString(), this);
-    }
+	@PostConstruct
+	protected final void init() {
+		commandDispatcher.registerCallbackHandler(getCommandString(), this);
+	}
 
-    protected abstract String getCommandString();
+	protected abstract String getCommandString();
 
-    public abstract void execute(TCallBackQuery callBackQuery);
+	public abstract void execute(TCallBackQuery callBackQuery);
 
 }

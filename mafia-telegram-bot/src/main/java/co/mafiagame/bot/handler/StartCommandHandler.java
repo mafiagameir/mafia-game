@@ -60,8 +60,8 @@ public class StartCommandHandler extends TelegramCommandHandler {
 			handleStartGame(message, account.getLang());
 		else {
 			client.send(new SendMessage()
-							.setChatId(message.getChat().getId())
-							.setText(MessageHolder.get("add.me.to.group", account.getLang())));
+					.setChatId(message.getChat().getId())
+					.setText(MessageHolder.get("add.me.to.group", account.getLang())));
 		}
 	}
 
@@ -69,38 +69,38 @@ public class StartCommandHandler extends TelegramCommandHandler {
 		Account savedAccount = accountRepository.save(new Account(message.getFrom()));
 		accountCache.put(savedAccount.getTelegramUserId(), savedAccount);
 		client.send(new SendMessageWithInlineKeyboard()
-						.setReplyMarkup(
-										new TInlineKeyboardMarkup()
-														.setInlineKeyboard(Collections.singletonList(
-																		Arrays.asList(
-																						new TInlineKeyboardButton().setText("English").setCallbackData("lang EN"),
-																						new TInlineKeyboardButton().setText("فارسی").setCallbackData("lang FA")
-																		)
-														))
-						)
-						.setChatId(message.getChat().getId())
-						.setText(MessageHolder.get("welcome.message", MessageHolder.Lang.FA)));
+				.setReplyMarkup(
+						new TInlineKeyboardMarkup()
+								.setInlineKeyboard(Collections.singletonList(
+										Arrays.asList(
+												new TInlineKeyboardButton().setText("English").setCallbackData("lang EN"),
+												new TInlineKeyboardButton().setText("فارسی").setCallbackData("lang FA")
+										)
+								))
+				)
+				.setChatId(message.getChat().getId())
+				.setText(MessageHolder.get("welcome.message", MessageHolder.Lang.FA)));
 	}
 
 	private void handleStartGame(TMessage message, MessageHolder.Lang lang) {
 		if (message.getText().matches("\\d+") ||
-						message.getText().equals(MessageHolder.get("no", lang)) ||
-						message.getText().equals(MessageHolder.get("yes", lang))) {
+				message.getText().equals(MessageHolder.get("no", lang)) ||
+				message.getText().equals(MessageHolder.get("yes", lang))) {
 			gameInfoProvided(message, lang);
 			return;
 		}
 		if (CommandDispatcher.removeSlash(message.getText())
-						.startsWith(Constants.Command.START_STASHED_GAME)) {
+				.startsWith(Constants.Command.START_STASHED_GAME)) {
 			states.put(message.getChat().getId(), new StartGameState());
 			client.send(new SendMessageWithForceReply()
-							.setText(MessageHolder.get("how.many.citizen.game.has", lang))
-							.setReplyToMessageId(message.getId())
-							.setChatId(message.getChat().getId()));
+					.setText(MessageHolder.get("how.many.citizen.game.has", lang))
+					.setReplyToMessageId(message.getId())
+					.setChatId(message.getChat().getId()));
 			scheduledExecutorService.schedule(() -> {
 				if (Objects.nonNull(states.remove(message.getChat().getId())))
 					client.send(new SendMessage()
-									.setText(MessageHolder.get("initiate.game.timeout", lang))
-									.setChatId(message.getChat().getId())
+							.setText(MessageHolder.get("initiate.game.timeout", lang))
+							.setChatId(message.getChat().getId())
 					);
 			}, 10, TimeUnit.MINUTES);
 		}
@@ -126,16 +126,16 @@ public class StartCommandHandler extends TelegramCommandHandler {
 		try {
 			startGameState.citizenNo = Integer.valueOf(message.getText());
 			client.send(new SendMessageWithForceReply()
-							.setReplyMarkup(new TForceReply())
-							.setReplyToMessageId(message.getId())
-							.setText(MessageHolder.get("how.many.mafia.game.has", lang))
-							.setChatId(message.getChat().getId()));
+					.setReplyMarkup(new TForceReply())
+					.setReplyToMessageId(message.getId())
+					.setText(MessageHolder.get("how.many.mafia.game.has", lang))
+					.setChatId(message.getChat().getId()));
 		} catch (NumberFormatException e) {
 			client.send(new SendMessageWithForceReply()
-							.setReplyMarkup(new TForceReply())
-							.setText(MessageHolder.get("how.many.citizen.game.has", lang))
-							.setReplyToMessageId(message.getId())
-							.setChatId(message.getChat().getId()));
+					.setReplyMarkup(new TForceReply())
+					.setText(MessageHolder.get("how.many.citizen.game.has", lang))
+					.setReplyToMessageId(message.getId())
+					.setChatId(message.getChat().getId()));
 		}
 	}
 
@@ -143,62 +143,62 @@ public class StartCommandHandler extends TelegramCommandHandler {
 		try {
 			startGameState.mafiaNo = Integer.valueOf(message.getText());
 			client.send(new SendMessageWithReplyKeyboard()
-							.setReplyMarkup(new TReplyKeyboardMarkup()
-											.setKeyboard(Collections.singletonList(Arrays.asList(
-															MessageHolder.get("yes", lang),
-															MessageHolder.get("no", lang))
-											))
-											.setOneTimeKeyboard(true)
-											.setSelective(true)
-							)
-							.setReplyToMessageId(message.getId())
-							.setChatId(message.getChat().getId())
-							.setText(MessageHolder.get("game.has.detective", lang)));
+					.setReplyMarkup(new TReplyKeyboardMarkup()
+							.setKeyboard(Collections.singletonList(Arrays.asList(
+									MessageHolder.get("yes", lang),
+									MessageHolder.get("no", lang))
+							))
+							.setOneTimeKeyboard(true)
+							.setSelective(true)
+					)
+					.setReplyToMessageId(message.getId())
+					.setChatId(message.getChat().getId())
+					.setText(MessageHolder.get("game.has.detective", lang)));
 		} catch (NumberFormatException e) {
 			client.send(new SendMessageWithForceReply()
-							.setReplyMarkup(new TForceReply())
-							.setText(MessageHolder.get("how.many.mafia.game.has", lang))
-							.setReplyToMessageId(message.getId())
-							.setChatId(message.getChat().getId()));
+					.setReplyMarkup(new TForceReply())
+					.setText(MessageHolder.get("how.many.mafia.game.has", lang))
+					.setReplyToMessageId(message.getId())
+					.setChatId(message.getChat().getId()));
 		}
 	}
 
 	private void readDetective(StartGameState startGameState, TMessage message, MessageHolder.Lang lang) {
 		startGameState.hasDetective = message.getText().equals(MessageHolder.get("yes", lang));
 		client.send(new SendMessageWithReplyKeyboard()
-						.setReplyMarkup(new TReplyKeyboardMarkup()
-										.setKeyboard(Collections.singletonList(Arrays.asList(
-														MessageHolder.get("yes", lang),
-														MessageHolder.get("no", lang))
-										))
-										.setOneTimeKeyboard(true)
-										.setSelective(true)
-						)
-						.setReplyToMessageId(message.getId())
-						.setChatId(message.getChat().getId())
-						.setText(MessageHolder.get("game.has.doctor", lang)));
+				.setReplyMarkup(new TReplyKeyboardMarkup()
+						.setKeyboard(Collections.singletonList(Arrays.asList(
+								MessageHolder.get("yes", lang),
+								MessageHolder.get("no", lang))
+						))
+						.setOneTimeKeyboard(true)
+						.setSelective(true)
+				)
+				.setReplyToMessageId(message.getId())
+				.setChatId(message.getChat().getId())
+				.setText(MessageHolder.get("game.has.doctor", lang)));
 	}
 
 
 	private void readDoctor(StartGameState startGameState, TMessage message, MessageHolder.Lang lang) {
 		startGameState.hasDoctor = message.getText().equals(MessageHolder.get("yes", lang));
 		Game game = new Game(String.valueOf(message.getChat().getId()),
-						startGameState.citizenNo, startGameState.mafiaNo,
-						startGameState.hasDoctor, startGameState.hasDetective, botConfiguration.configuration());
+				startGameState.citizenNo, startGameState.mafiaNo,
+				startGameState.hasDoctor, startGameState.hasDetective, botConfiguration.configuration());
 		gameContainer.putRoom(message.getChat().getId(), new Room()
-						.setGame(game)
-						.setRoomId(message.getChat().getId())
-						.setLang(lang));
+				.setGame(game)
+				.setRoomId(message.getChat().getId())
+				.setLang(lang));
 		states.remove(message.getChat().getId());
 		client.send(new SendMessageWithReplyKeyboard()
-						.setReplyMarkup(new TReplyKeyboardMarkup()
-										.setSelective(false)
-										.setOneTimeKeyboard(false)
-										.setKeyboard(Collections.singletonList(Collections.singletonList(
-														MessageHolder.get("register", lang)))))
-						.setChatId(message.getChat().getId())
-						.setText(MessageHolder.get("register.to.start", lang,
-                                String.valueOf(game.getGameSetup().totalPlayer())))
+				.setReplyMarkup(new TReplyKeyboardMarkup()
+						.setSelective(false)
+						.setOneTimeKeyboard(false)
+						.setKeyboard(Collections.singletonList(Collections.singletonList(
+								MessageHolder.get("register", lang)))))
+				.setChatId(message.getChat().getId())
+				.setText(MessageHolder.get("register.to.start", lang,
+						String.valueOf(game.getGameSetup().totalPlayer())))
 		);
 	}
 

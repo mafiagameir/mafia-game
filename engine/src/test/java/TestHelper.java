@@ -25,41 +25,42 @@ import java.util.List;
  * @author Esa Hekmatizadeh
  */
 public class TestHelper {
-    private List<String> citizens = new ArrayList<>();
-    private List<String> mafia = new ArrayList<>();
-    private String doctor;
-    private String detective;
+	private List<String> citizens = new ArrayList<>();
+	private List<String> mafia = new ArrayList<>();
+	private String doctor;
+	private String detective;
 
-    public TestHelper(List<Player> players) {
-        players.forEach(p -> {
-            switch (p.getRole()) {
-                case CITIZEN:
-                    citizens.add(p.getUserId());
-                    break;
-                case MAFIA:
-                    mafia.add(p.getUserId());
-                    break;
-                case DOCTOR:
-                    doctor = p.getUserId();
-                    break;
-                case DETECTIVE:
-                    detective = p.getUserId();
-            }
-        });
-    }
-    public String citizen(int index){
-        return citizens.get(index);
-    }
+	public TestHelper(List<Player> players) {
+		players.forEach(p -> {
+			switch (p.getRole()) {
+				case CITIZEN:
+					citizens.add(p.getUserId());
+					break;
+				case MAFIA:
+					mafia.add(p.getUserId());
+					break;
+				case DOCTOR:
+					doctor = p.getUserId();
+					break;
+				case DETECTIVE:
+					detective = p.getUserId();
+			}
+		});
+	}
 
-    public String mafia(int index){
-        return mafia.get(index);
-    }
+	public String citizen(int index) {
+		return citizens.get(index);
+	}
 
-    public String doctor() {
-        return doctor;
-    }
+	public String mafia(int index) {
+		return mafia.get(index);
+	}
 
-    public String detective() {
-        return detective;
-    }
+	public String doctor() {
+		return doctor;
+	}
+
+	public String detective() {
+		return detective;
+	}
 }

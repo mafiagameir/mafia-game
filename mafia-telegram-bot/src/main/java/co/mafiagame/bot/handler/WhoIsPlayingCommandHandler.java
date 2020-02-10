@@ -38,28 +38,28 @@ import java.util.stream.Collectors;
  */
 @Component
 public class WhoIsPlayingCommandHandler extends TelegramCommandHandler {
-    @Override
-    protected Collection<String> getCommandString() {
-        return Collections.singleton(Constants.Command.WHO_IS_PLAYING);
-    }
+	@Override
+	protected Collection<String> getCommandString() {
+		return Collections.singleton(Constants.Command.WHO_IS_PLAYING);
+	}
 
-    @Override
-    public void execute(TMessage message) {
-        Long roomId = gameContainer.roomOfUser(message.getFrom().getId());
-        if (Objects.isNull(roomId)) {
-            sendMessage(message, "game.not.started.yet",
-                    getLang(message), false);
-            return;
-        }
-        Room room = gameContainer.room(roomId);
-        client.send(new SendMessage()
-                .setText(room.getGame().alivePlayer().stream()
-                        .map(Player::getUserId).map(Long::valueOf)
-                        .map(room::findPlayer)
-                        .map(Optional::get)
-                        .map(Account::fullName)
-                        .collect(Collectors.joining(MessageHolder.get("and", room.getLang()))))
-                .setChatId(message.getChat().getId())
-        );
-    }
+	@Override
+	public void execute(TMessage message) {
+		Long roomId = gameContainer.roomOfUser(message.getFrom().getId());
+		if (Objects.isNull(roomId)) {
+			sendMessage(message, "game.not.started.yet",
+					getLang(message), false);
+			return;
+		}
+		Room room = gameContainer.room(roomId);
+		client.send(new SendMessage()
+				.setText(room.getGame().alivePlayer().stream()
+						.map(Player::getUserId).map(Long::valueOf)
+						.map(room::findPlayer)
+						.map(Optional::get)
+						.map(Account::fullName)
+						.collect(Collectors.joining(MessageHolder.get("and", room.getLang()))))
+				.setChatId(message.getChat().getId())
+		);
+	}
 }

@@ -28,78 +28,78 @@ import java.util.Objects;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TCallBackQuery {
-    private String id;
-    private TUser from;
-    private TMessage message;
-    @JsonProperty("inline_message_id")
-    private String inlineMessageId;
-    @JsonProperty("chat_instance")
-    private String chatInstance;
-    private String data;
+	private String id;
+	private TUser from;
+	private TMessage message;
+	@JsonProperty("inline_message_id")
+	private String inlineMessageId;
+	@JsonProperty("chat_instance")
+	private String chatInstance;
+	private String data;
 
-    public String getId() {
-        return id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public TCallBackQuery setId(String id) {
-        this.id = id;
-        return this;
-    }
+	public TCallBackQuery setId(String id) {
+		this.id = id;
+		return this;
+	}
 
-    public TUser getFrom() {
-        return from;
-    }
+	public TUser getFrom() {
+		return from;
+	}
 
-    public TCallBackQuery setFrom(TUser from) {
-        this.from = from;
-        return this;
-    }
+	public TCallBackQuery setFrom(TUser from) {
+		this.from = from;
+		return this;
+	}
 
-    public TMessage getMessage() {
-        return message;
-    }
+	public TMessage getMessage() {
+		return message;
+	}
 
-    public TCallBackQuery setMessage(TMessage message) {
-        this.message = message;
-        return this;
-    }
+	public TCallBackQuery setMessage(TMessage message) {
+		this.message = message;
+		return this;
+	}
 
-    public String getInlineMessageId() {
-        return inlineMessageId;
-    }
+	public String getInlineMessageId() {
+		return inlineMessageId;
+	}
 
-    public TCallBackQuery setInlineMessageId(String inlineMessageId) {
-        this.inlineMessageId = inlineMessageId;
-        return this;
-    }
+	public TCallBackQuery setInlineMessageId(String inlineMessageId) {
+		this.inlineMessageId = inlineMessageId;
+		return this;
+	}
 
-    public String getChatInstance() {
-        return chatInstance;
-    }
+	public String getChatInstance() {
+		return chatInstance;
+	}
 
-    public TCallBackQuery setChatInstance(String chatInstance) {
-        this.chatInstance = chatInstance;
-        return this;
-    }
+	public TCallBackQuery setChatInstance(String chatInstance) {
+		this.chatInstance = chatInstance;
+		return this;
+	}
 
-    public String getData() {
-        return data;
-    }
+	public String getData() {
+		return data;
+	}
 
-    public TCallBackQuery setData(String data) {
-        this.data = data;
-        return this;
-    }
+	public TCallBackQuery setData(String data) {
+		this.data = data;
+		return this;
+	}
 
-    @Override
-    public String toString() {
-        return "TCallBackQuery{" +
-                (Objects.isNull(id) ? "" : " id='" + id + '\'') +
-                (Objects.isNull(from) ? "" : " ,  from=" + from) +
-                (Objects.isNull(message) ? "" : " ,  message=" + message) +
-                (Objects.isNull(inlineMessageId) ? "" : " ,  inlineMessageId='" + inlineMessageId + '\'') +
-                (Objects.isNull(chatInstance) ? "" : " ,  chatInstance='" + chatInstance + '\'') +
-                (Objects.isNull(data) ? "" : " ,  data='" + data + '\'') +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "TCallBackQuery{" +
+				(Objects.isNull(id) ? "" : " id='" + id + '\'') +
+				(Objects.isNull(from) ? "" : " ,  from=" + from) +
+				(Objects.isNull(message) ? "" : " ,  message=" + message) +
+				(Objects.isNull(inlineMessageId) ? "" : " ,  inlineMessageId='" + inlineMessageId + '\'') +
+				(Objects.isNull(chatInstance) ? "" : " ,  chatInstance='" + chatInstance + '\'') +
+				(Objects.isNull(data) ? "" : " ,  data='" + data + '\'') +
+				'}';
+	}
 }

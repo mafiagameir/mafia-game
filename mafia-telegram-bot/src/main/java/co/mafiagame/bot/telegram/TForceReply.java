@@ -24,25 +24,25 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Esa Hekmatizadeh
  */
 public class TForceReply {
-    @JsonProperty("force_reply")
-    private boolean forceReply=true;
-    private boolean selective =true;
+	@JsonProperty("force_reply")
+	private boolean forceReply = true;
+	private boolean selective = true;
 
-    public boolean isForceReply() {
-        return forceReply;
-    }
+	public boolean isForceReply() {
+		return forceReply;
+	}
 
-    public TForceReply setForceReply(boolean forceReply) {
-        this.forceReply = forceReply;
-        return this;
-    }
+	public TForceReply setForceReply(boolean forceReply) {
+		this.forceReply = forceReply;
+		return this;
+	}
 
-    public boolean isSelective() {
-        return selective;
-    }
+	public boolean isSelective() {
+		return selective;
+	}
 
-    public TForceReply setSelective(boolean selective) {
-        this.selective = selective;
-        return this;
-    }
+	public TForceReply setSelective(boolean selective) {
+		this.selective = selective;
+		return this;
+	}
 }

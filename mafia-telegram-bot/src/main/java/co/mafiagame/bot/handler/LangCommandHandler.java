@@ -52,13 +52,13 @@ public class LangCommandHandler extends TelegramCallbackHandler {
 		String lang = message.getData().substring(message.getData().indexOf(" ") + 1);
 		setLang(message.getFrom().getId(), MessageHolder.Lang.valueOf(lang), message);
 		client.editMessageReplyMarkup(new EditMessageReplyMarkupRequest()
-						.setChatId(message.getMessage().getChat().getId())
-						.setMessageId(message.getMessage().getId())
-						.setReplyMarkup(new TInlineKeyboardMarkup().setInlineKeyboard(Collections.emptyList()))
+				.setChatId(message.getMessage().getChat().getId())
+				.setMessageId(message.getMessage().getId())
+				.setReplyMarkup(new TInlineKeyboardMarkup().setInlineKeyboard(Collections.emptyList()))
 		);
 		client.send(new SendMessage()
-						.setChatId(message.getMessage().getChat().getId())
-						.setText(MessageHolder.get("add.me.to.group", MessageHolder.Lang.valueOf(lang))));
+				.setChatId(message.getMessage().getChat().getId())
+				.setText(MessageHolder.get("add.me.to.group", MessageHolder.Lang.valueOf(lang))));
 	}
 
 	private void setLang(Long userId, MessageHolder.Lang lang, TCallBackQuery message) {

@@ -35,25 +35,25 @@ import java.util.Objects;
  */
 @Component
 public class KillMeCommandHandler extends TelegramCommandHandler {
-    @Override
-    protected Collection<String> getCommandString() {
-        return Collections.singleton(Constants.Command.KILL_ME);
-    }
+	@Override
+	protected Collection<String> getCommandString() {
+		return Collections.singleton(Constants.Command.KILL_ME);
+	}
 
-    @Override
-    public void execute(TMessage message) {
-        Long roomId = gameContainer.roomOfUser(message.getFrom().getId());
-        if (Objects.isNull(roomId)) {
-            Account account = accountCache.get(message.getFrom().getId());
-            sendMessage(message, "game.not.started.yet",
-                    Objects.isNull(account) ? MessageHolder.Lang.EN : account.getLang(), false);
-            return;
-        }
-        Room room = gameContainer.room(roomId);
-        room.getGame().externalKill(String.valueOf(message.getFrom().getId()));
-        client.send(new SendMessage()
-                .setChatId(room.getRoomId())
-                .setText(MessageHolder.get("user.exit.game", room.getLang(),message.getFrom().getFirstName() + " " + message.getFrom().getLastName()))
-        );
-    }
+	@Override
+	public void execute(TMessage message) {
+		Long roomId = gameContainer.roomOfUser(message.getFrom().getId());
+		if (Objects.isNull(roomId)) {
+			Account account = accountCache.get(message.getFrom().getId());
+			sendMessage(message, "game.not.started.yet",
+					Objects.isNull(account) ? MessageHolder.Lang.EN : account.getLang(), false);
+			return;
+		}
+		Room room = gameContainer.room(roomId);
+		room.getGame().externalKill(String.valueOf(message.getFrom().getId()));
+		client.send(new SendMessage()
+				.setChatId(room.getRoomId())
+				.setText(MessageHolder.get("user.exit.game", room.getLang(), message.getFrom().getFirstName() + " " + message.getFrom().getLastName()))
+		);
+	}
 }

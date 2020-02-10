@@ -26,43 +26,43 @@ import java.util.Objects;
  * @author hekmatof
  */
 public class TUpdate {
-    @JsonProperty("update_id")
-    private Long id;
-    private TMessage message;
-    @JsonProperty("callback_query")
-    private TCallBackQuery callBackQuery;
+	@JsonProperty("update_id")
+	private Long id;
+	private TMessage message;
+	@JsonProperty("callback_query")
+	private TCallBackQuery callBackQuery;
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public TMessage getMessage() {
-        return message;
-    }
+	public TMessage getMessage() {
+		return message;
+	}
 
-    public void setMessage(TMessage message) {
-        this.message = message;
-    }
+	public void setMessage(TMessage message) {
+		this.message = message;
+	}
 
-    public TCallBackQuery getCallBackQuery() {
-        return callBackQuery;
-    }
+	public TCallBackQuery getCallBackQuery() {
+		return callBackQuery;
+	}
 
-    public TUpdate setCallBackQuery(TCallBackQuery callBackQuery) {
-        this.callBackQuery = callBackQuery;
-        return this;
-    }
+	public TUpdate setCallBackQuery(TCallBackQuery callBackQuery) {
+		this.callBackQuery = callBackQuery;
+		return this;
+	}
 
-    @Override
-    public String toString() {
-        return "TUpdate{" +
-                (Objects.isNull(id) ? "" : " id=" + id) +
-                (Objects.isNull(message) ? "" : " ,  message=" + message) +
-                (Objects.isNull(callBackQuery) ? "" : " ,  callBackQuery=" + callBackQuery) +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "TUpdate{" +
+				(Objects.isNull(id) ? "" : " id=" + id) +
+				(Objects.isNull(message) ? "" : " ,  message=" + message) +
+				(Objects.isNull(callBackQuery) ? "" : " ,  callBackQuery=" + callBackQuery) +
+				'}';
+	}
 }

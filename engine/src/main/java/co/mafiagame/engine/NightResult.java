@@ -22,20 +22,20 @@ package co.mafiagame.engine;
  * @author Esa Hekmatizadeh
  */
 public class NightResult {
-    private final Player killedPlayer;
+	private final Player killedPlayer;
 
-    public NightResult(Player killedPlayer) {
-        this.killedPlayer = killedPlayer;
-    }
+	public NightResult(Player killedPlayer) {
+		this.killedPlayer = killedPlayer;
+	}
 
-    public Player getKilledPlayer() {
-        return killedPlayer;
-    }
+	public Player getKilledPlayer() {
+		return killedPlayer;
+	}
 
-    @Override
-    public String toString() {
-        return "NightResult{" +
-                "killedPlayer=" + killedPlayer +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "NightResult{" +
+				"killedPlayer=" + killedPlayer +
+				'}';
+	}
 }

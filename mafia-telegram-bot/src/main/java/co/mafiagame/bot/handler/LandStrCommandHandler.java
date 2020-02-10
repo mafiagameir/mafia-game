@@ -58,24 +58,24 @@ public class LandStrCommandHandler extends TelegramCommandHandler {
 				accountCache.put(account.getTelegramUserId(), account);
 			}
 			client.send(new SendMessage()
-							.setChatId(message.getChat().getId())
-							.setText(MessageHolder.get("language.changed", lang))
+					.setChatId(message.getChat().getId())
+					.setText(MessageHolder.get("language.changed", lang))
 			);
 		}
 	}
 
 	private void sendKeyboard(Long chatId) {
 		client.send(new SendMessageWithInlineKeyboard()
-						.setReplyMarkup(
-										new TInlineKeyboardMarkup()
-														.setInlineKeyboard(Collections.singletonList(
-																		Arrays.asList(
-																						new TInlineKeyboardButton().setText("English").setCallbackData("lang EN"),
-																						new TInlineKeyboardButton().setText("فارسی").setCallbackData("lang FA")
-																		)
-														))
-						)
-						.setChatId(chatId)
-						.setText(MessageHolder.get("set.lang", MessageHolder.Lang.FA)));
+				.setReplyMarkup(
+						new TInlineKeyboardMarkup()
+								.setInlineKeyboard(Collections.singletonList(
+										Arrays.asList(
+												new TInlineKeyboardButton().setText("English").setCallbackData("lang EN"),
+												new TInlineKeyboardButton().setText("فارسی").setCallbackData("lang FA")
+										)
+								))
+				)
+				.setChatId(chatId)
+				.setText(MessageHolder.get("set.lang", MessageHolder.Lang.FA)));
 	}
 }

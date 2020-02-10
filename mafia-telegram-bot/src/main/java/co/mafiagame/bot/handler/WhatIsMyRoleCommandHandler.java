@@ -35,34 +35,34 @@ import java.util.Objects;
  */
 @Component
 public class WhatIsMyRoleCommandHandler extends TelegramCommandHandler {
-    @Autowired
-    private RegisterCommandHandler registerCommandHandler;
+	@Autowired
+	private RegisterCommandHandler registerCommandHandler;
 
-    @Override
-    protected Collection<String> getCommandString() {
-        return Collections.singleton(Constants.Command.WHAT_IS_MY_ROLE);
-    }
+	@Override
+	protected Collection<String> getCommandString() {
+		return Collections.singleton(Constants.Command.WHAT_IS_MY_ROLE);
+	}
 
-    @Override
-    public void execute(TMessage message) {
-        if (message.isGroup()) {
-            sendMessage(message, "command.not.available.in.group", getLang(message), false);
-            return;
-        }
-        Long roomId = gameContainer.roomOfUser(message.getFrom().getId());
-        if (Objects.isNull(roomId)) {
-            sendMessage(message, "game.not.started.yet", getLang(message), false);
-            return;
-        }
-        Room room = gameContainer.room(roomId);
-        if (room.getGame().getGameMood() == GameMood.NOT_STARTED) {
-            sendMessage(message, "game.not.started.yet", getLang(message), false);
-            return;
-        }
-        String msg = registerCommandHandler.roleMsg(room, room.findPlayer(message.getFrom().getId())
-                .orElseThrow(IllegalStateException::new));
-        client.send(new SendMessage()
-                .setChatId(message.getChat().getId())
-                .setText(msg));
-    }
+	@Override
+	public void execute(TMessage message) {
+		if (message.isGroup()) {
+			sendMessage(message, "command.not.available.in.group", getLang(message), false);
+			return;
+		}
+		Long roomId = gameContainer.roomOfUser(message.getFrom().getId());
+		if (Objects.isNull(roomId)) {
+			sendMessage(message, "game.not.started.yet", getLang(message), false);
+			return;
+		}
+		Room room = gameContainer.room(roomId);
+		if (room.getGame().getGameMood() == GameMood.NOT_STARTED) {
+			sendMessage(message, "game.not.started.yet", getLang(message), false);
+			return;
+		}
+		String msg = registerCommandHandler.roleMsg(room, room.findPlayer(message.getFrom().getId())
+				.orElseThrow(IllegalStateException::new));
+		client.send(new SendMessage()
+				.setChatId(message.getChat().getId())
+				.setText(msg));
+	}
 }

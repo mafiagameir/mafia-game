@@ -22,5 +22,5 @@ package co.mafiagame.engine;
  * @author hekmatof
  */
 public enum GameMood {
-    NOT_STARTED, DAY, NIGHT_MAFIA, NIGHT_DETECTIVE, NIGHT_DOCTOR, ENDED
+	NOT_STARTED, DAY, NIGHT_MAFIA, NIGHT_DETECTIVE, NIGHT_DOCTOR, ENDED
 }

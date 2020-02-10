@@ -27,15 +27,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SendMessageWithReplyKeyboard extends SendMessage {
 
-    @JsonProperty("reply_markup")
-    private TReplyKeyboardMarkup replyMarkup;
+	@JsonProperty("reply_markup")
+	private TReplyKeyboardMarkup replyMarkup;
 
-    public TReplyKeyboardMarkup getReplyMarkup() {
-        return replyMarkup;
-    }
+	public TReplyKeyboardMarkup getReplyMarkup() {
+		return replyMarkup;
+	}
 
-    public SendMessageWithReplyKeyboard setReplyMarkup(TReplyKeyboardMarkup replyMarkup) {
-        this.replyMarkup = replyMarkup;
-        return this;
-    }
+	public SendMessageWithReplyKeyboard setReplyMarkup(TReplyKeyboardMarkup replyMarkup) {
+		this.replyMarkup = replyMarkup;
+		return this;
+	}
 }

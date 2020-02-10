@@ -31,85 +31,85 @@ import java.util.regex.Matcher;
  */
 @Entity
 public class Account {
-    @Id
-    @GeneratedValue(generator = "sequence", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "sequence", allocationSize = 10)
-    private Long id;
-    @Column(nullable = false, unique = true)
-    private Long telegramUserId;
-    private String username;
-    private String firstName;
-    private String lastName;
-    @Enumerated(EnumType.STRING)
-    private MessageHolder.Lang lang;
+	@Id
+	@GeneratedValue(generator = "sequence", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "sequence", allocationSize = 10)
+	private Long id;
+	@Column(nullable = false, unique = true)
+	private Long telegramUserId;
+	private String username;
+	private String firstName;
+	private String lastName;
+	@Enumerated(EnumType.STRING)
+	private MessageHolder.Lang lang;
 
-    public Account(TUser from) {
-        this.username = from.getUsername();
-        this.firstName = from.getFirstName();
-        this.lastName = from.getLastName();
-        this.telegramUserId = from.getId();
-    }
+	public Account(TUser from) {
+		this.username = from.getUsername();
+		this.firstName = from.getFirstName();
+		this.lastName = from.getLastName();
+		this.telegramUserId = from.getId();
+	}
 
-    public Account() {
-    }
+	public Account() {
+	}
 
-    @Transient
-    public String fullName() {
-        return Matcher.quoteReplacement((StringUtils.isEmpty(firstName) ? "" : firstName) +
-            " " + (StringUtils.isEmpty(lastName) ? "" : lastName));
-    }
+	@Transient
+	public String fullName() {
+		return Matcher.quoteReplacement((StringUtils.isEmpty(firstName) ? "" : firstName) +
+				" " + (StringUtils.isEmpty(lastName) ? "" : lastName));
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public Account setId(Long id) {
-        this.id = id;
-        return this;
-    }
+	public Account setId(Long id) {
+		this.id = id;
+		return this;
+	}
 
-    public Long getTelegramUserId() {
-        return telegramUserId;
-    }
+	public Long getTelegramUserId() {
+		return telegramUserId;
+	}
 
-    public Account setTelegramUserId(Long telegramUserId) {
-        this.telegramUserId = telegramUserId;
-        return this;
-    }
+	public Account setTelegramUserId(Long telegramUserId) {
+		this.telegramUserId = telegramUserId;
+		return this;
+	}
 
-    public String getUsername() {
-        return username;
-    }
+	public String getUsername() {
+		return username;
+	}
 
-    public Account setUsername(String username) {
-        this.username = username;
-        return this;
-    }
+	public Account setUsername(String username) {
+		this.username = username;
+		return this;
+	}
 
-    public String getFirstName() {
-        return firstName;
-    }
+	public String getFirstName() {
+		return firstName;
+	}
 
-    public Account setFirstName(String firstName) {
-        this.firstName = firstName;
-        return this;
-    }
+	public Account setFirstName(String firstName) {
+		this.firstName = firstName;
+		return this;
+	}
 
-    public String getLastName() {
-        return lastName;
-    }
+	public String getLastName() {
+		return lastName;
+	}
 
-    public Account setLastName(String lastName) {
-        this.lastName = lastName;
-        return this;
-    }
+	public Account setLastName(String lastName) {
+		this.lastName = lastName;
+		return this;
+	}
 
-    public MessageHolder.Lang getLang() {
-        return lang;
-    }
+	public MessageHolder.Lang getLang() {
+		return lang;
+	}
 
-    public Account setLang(MessageHolder.Lang lang) {
-        this.lang = lang;
-        return this;
-    }
+	public Account setLang(MessageHolder.Lang lang) {
+		this.lang = lang;
+		return this;
+	}
 }

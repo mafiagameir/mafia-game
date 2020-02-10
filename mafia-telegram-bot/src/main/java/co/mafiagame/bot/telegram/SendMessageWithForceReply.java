@@ -26,15 +26,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SendMessageWithForceReply extends SendMessage {
-    @JsonProperty("reply_markup")
-    private TForceReply replyMarkup = new TForceReply();
+	@JsonProperty("reply_markup")
+	private TForceReply replyMarkup = new TForceReply();
 
-    public TForceReply getReplyMarkup() {
-        return replyMarkup;
-    }
+	public TForceReply getReplyMarkup() {
+		return replyMarkup;
+	}
 
-    public SendMessageWithForceReply setReplyMarkup(TForceReply replyMarkup) {
-        this.replyMarkup = replyMarkup;
-        return this;
-    }
+	public SendMessageWithForceReply setReplyMarkup(TForceReply replyMarkup) {
+		this.replyMarkup = replyMarkup;
+		return this;
+	}
 }

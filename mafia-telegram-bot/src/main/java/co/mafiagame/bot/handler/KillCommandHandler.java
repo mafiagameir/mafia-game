@@ -37,74 +37,74 @@ import java.util.stream.Collectors;
  */
 @Component
 public class KillCommandHandler extends TelegramCallbackHandler {
-    @Override
-    protected String getCommandString() {
-        return Constants.Command.MAFIA_VOTE;
-    }
+	@Override
+	protected String getCommandString() {
+		return Constants.Command.MAFIA_VOTE;
+	}
 
-    @Override
-    public void execute(TCallBackQuery callBackQuery) {
-        Long killerId = callBackQuery.getFrom().getId();
-        Long roomId = gameContainer.roomOfUser(killerId);
-        if (Objects.isNull(roomId))
-            throw new GameNotStartedYetException();
-        Room room = gameContainer.room(roomId);
-        if (room.getGame().getGameMood() != GameMood.NIGHT_MAFIA)
-            throw new NotTimeOfMafiaKillException();
-        String victim = callBackQuery.getData().substring(callBackQuery.getData().indexOf(" ")).trim();
-        ElectionResult killResult = room.getGame().kill(new Vote(String.valueOf(killerId).trim(),
-                Collections.singleton(victim)));
-        client.editMessageText(new EditMessageTextRequest()
-                .setChatId(callBackQuery.getMessage().getChat().getId())
-                .setMessageId(callBackQuery.getMessage().getId())
-                .setReplyMarkup(new TInlineKeyboardMarkup().setInlineKeyboard(Collections.emptyList()))
-                .setText(MessageHolder.get("ok", room.getLang()))
-        );
-        if (Objects.nonNull(killResult))
-            if (killResult.isSingleResult())
-                handleFinishElection(room, killResult);
-            else
-                renewKeyboard(room, killResult);
-    }
+	@Override
+	public void execute(TCallBackQuery callBackQuery) {
+		Long killerId = callBackQuery.getFrom().getId();
+		Long roomId = gameContainer.roomOfUser(killerId);
+		if (Objects.isNull(roomId))
+			throw new GameNotStartedYetException();
+		Room room = gameContainer.room(roomId);
+		if (room.getGame().getGameMood() != GameMood.NIGHT_MAFIA)
+			throw new NotTimeOfMafiaKillException();
+		String victim = callBackQuery.getData().substring(callBackQuery.getData().indexOf(" ")).trim();
+		ElectionResult killResult = room.getGame().kill(new Vote(String.valueOf(killerId).trim(),
+				Collections.singleton(victim)));
+		client.editMessageText(new EditMessageTextRequest()
+				.setChatId(callBackQuery.getMessage().getChat().getId())
+				.setMessageId(callBackQuery.getMessage().getId())
+				.setReplyMarkup(new TInlineKeyboardMarkup().setInlineKeyboard(Collections.emptyList()))
+				.setText(MessageHolder.get("ok", room.getLang()))
+		);
+		if (Objects.nonNull(killResult))
+			if (killResult.isSingleResult())
+				handleFinishElection(room, killResult);
+			else
+				renewKeyboard(room, killResult);
+	}
 
-    private void handleFinishElection(Room room, ElectionResult killResult) {
-        Long victim = Long.valueOf(killResult.getElects().get(0));
-        room.getGame().mafias().stream().map(Player::getUserId)
-                .map(Long::valueOf)
-                .forEach(id -> client.send(new SendMessage()
-                        .setText(MessageHolder.get("mafia.decide.to.kill.player", room.getLang(),
-                                room.findPlayer(victim)
-                                        .orElse(new Account()
-                                                .setFirstName(MessageHolder.get("nobody", room.getLang()))
-                                        ).fullName()))
-                        .setChatId(id)
-                ));
-    }
+	private void handleFinishElection(Room room, ElectionResult killResult) {
+		Long victim = Long.valueOf(killResult.getElects().get(0));
+		room.getGame().mafias().stream().map(Player::getUserId)
+				.map(Long::valueOf)
+				.forEach(id -> client.send(new SendMessage()
+						.setText(MessageHolder.get("mafia.decide.to.kill.player", room.getLang(),
+								room.findPlayer(victim)
+										.orElse(new Account()
+												.setFirstName(MessageHolder.get("nobody", room.getLang()))
+										).fullName()))
+						.setChatId(id)
+				));
+	}
 
-    private void renewKeyboard(Room room, ElectionResult killResult) {
-        room.getGame().mafias().stream().map(Player::getUserId)
-                .map(Long::valueOf)
-                .forEach(id -> client.send(new SendMessageWithInlineKeyboard()
-                                .setReplyMarkup(new TInlineKeyboardMarkup()
-                                        .addOptions(
-                                                room.getGame().alivePlayer().stream()
-                                                        .map(Player::getUserId)
-                                                        .map(Long::valueOf)
-                                                        .map(room::findPlayer)
-                                                        .map(Optional::get)
-                                                        .map(a -> new TInlineKeyboardButton().setText(a.fullName())
-                                                                .setCallbackData("kill " + String.valueOf(a.getTelegramUserId())))
-                                                        .collect(Collectors.toList())))
-                                .setChatId(id)
-                                .setText(MessageHolder.get("you.cant.decide.who.to.kill",
-                                        room.getLang(),
-                                        killResult.getElects().stream().map(Long::valueOf)
-                                                .map(room::findPlayer).map(Optional::get)
-                                                .map(Account::fullName)
-                                                .collect(Collectors.joining(MessageHolder.get("and", room.getLang()))),
-                                        String.valueOf(killResult.getResult().get(killResult.getElects().get(0)))
-                                ))
-                        )
-                );
-    }
+	private void renewKeyboard(Room room, ElectionResult killResult) {
+		room.getGame().mafias().stream().map(Player::getUserId)
+				.map(Long::valueOf)
+				.forEach(id -> client.send(new SendMessageWithInlineKeyboard()
+								.setReplyMarkup(new TInlineKeyboardMarkup()
+										.addOptions(
+												room.getGame().alivePlayer().stream()
+														.map(Player::getUserId)
+														.map(Long::valueOf)
+														.map(room::findPlayer)
+														.map(Optional::get)
+														.map(a -> new TInlineKeyboardButton().setText(a.fullName())
+																.setCallbackData("kill " + String.valueOf(a.getTelegramUserId())))
+														.collect(Collectors.toList())))
+								.setChatId(id)
+								.setText(MessageHolder.get("you.cant.decide.who.to.kill",
+										room.getLang(),
+										killResult.getElects().stream().map(Long::valueOf)
+												.map(room::findPlayer).map(Optional::get)
+												.map(Account::fullName)
+												.collect(Collectors.joining(MessageHolder.get("and", room.getLang()))),
+										String.valueOf(killResult.getResult().get(killResult.getElects().get(0)))
+								))
+						)
+				);
+	}
 }

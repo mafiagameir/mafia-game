@@ -26,45 +26,45 @@ import java.util.Objects;
  * @author Esa Hekmatizadeh
  */
 public class Player {
-    public final static String NOBODY_USERID = "0";
-    public final static Player NOBODY = new Player(NOBODY_USERID);
-    private final String userId; // this property come from client system
-    private Role role = Role.UNKNOWN;
+	public final static String NOBODY_USERID = "0";
+	public final static Player NOBODY = new Player(NOBODY_USERID);
+	private final String userId; // this property come from client system
+	private Role role = Role.UNKNOWN;
 
-    Player(String userId) {
-        if (Objects.isNull(userId))
-            throw new IllegalArgumentException("cannot register a user with null userId");
-        this.userId = userId;
-    }
+	Player(String userId) {
+		if (Objects.isNull(userId))
+			throw new IllegalArgumentException("cannot register a user with null userId");
+		this.userId = userId;
+	}
 
-    public String getUserId() {
-        return userId;
-    }
+	public String getUserId() {
+		return userId;
+	}
 
-    public Role getRole() {
-        return role;
-    }
+	public Role getRole() {
+		return role;
+	}
 
-    Player setRole(Role role) {
-        this.role = role;
-        return this;
-    }
+	Player setRole(Role role) {
+		this.role = role;
+		return this;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Player player = (Player) o;
-        return userId.equals(player.userId);
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Player player = (Player) o;
+		return userId.equals(player.userId);
+	}
 
-    @Override
-    public int hashCode() {
-        return userId.hashCode();
-    }
+	@Override
+	public int hashCode() {
+		return userId.hashCode();
+	}
 
-    @Override
-    public String toString() {
-        return "Player(" + userId + ":" + role + ")";
-    }
+	@Override
+	public String toString() {
+		return "Player(" + userId + ":" + role + ")";
+	}
 }

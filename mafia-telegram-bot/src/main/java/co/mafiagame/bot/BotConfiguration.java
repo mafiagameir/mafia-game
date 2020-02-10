@@ -44,153 +44,153 @@ import java.util.stream.Collectors;
  */
 @Component
 public final class BotConfiguration {
-    private static final Logger logger = LoggerFactory.getLogger(BotConfiguration.class);
+	private static final Logger logger = LoggerFactory.getLogger(BotConfiguration.class);
 
-    private Configuration configuration;
-    @Autowired
-    private TelegramClient client;
-    @Autowired
-    private GameContainer gameContainer;
-    @Autowired
-    private AuditRepository auditRepository;
+	private Configuration configuration;
+	@Autowired
+	private TelegramClient client;
+	@Autowired
+	private GameContainer gameContainer;
+	@Autowired
+	private AuditRepository auditRepository;
 
-    private static String roleKey(Role role) {
-        switch (role) {
-            case CITIZEN:
-                return "player.was.citizen";
-            case MAFIA:
-                return "player.was.mafia";
-            case DOCTOR:
-                return "player.was.doctor";
-            case DETECTIVE:
-                return "player.was.detective";
-        }
-        throw new IllegalArgumentException();
-    }
+	private static String roleKey(Role role) {
+		switch (role) {
+			case CITIZEN:
+				return "player.was.citizen";
+			case MAFIA:
+				return "player.was.mafia";
+			case DOCTOR:
+				return "player.was.doctor";
+			case DETECTIVE:
+				return "player.was.detective";
+		}
+		throw new IllegalArgumentException();
+	}
 
-    public Configuration configuration() {
-        if (Objects.isNull(configuration))
-            setConfiguration();
-        return configuration;
-    }
+	public Configuration configuration() {
+		if (Objects.isNull(configuration))
+			setConfiguration();
+		return configuration;
+	}
 
-    private void setConfiguration() {
-        configuration = new Configuration.Builder()
-                .registerMafiaTurnListener(this::mafiaTurn)
-                .registerDetectiveTurnListener(this::detectiveTurn)
-                .registerDoctorTurnListener(this::doctorTurn)
-                .registerSunriseListener(this::sunriseHandler)
-                .registerGameFinishListener(this::finishHandler)
-                .build();
-    }
+	private void setConfiguration() {
+		configuration = new Configuration.Builder()
+				.registerMafiaTurnListener(this::mafiaTurn)
+				.registerDetectiveTurnListener(this::detectiveTurn)
+				.registerDoctorTurnListener(this::doctorTurn)
+				.registerSunriseListener(this::sunriseHandler)
+				.registerGameFinishListener(this::finishHandler)
+				.build();
+	}
 
-    private void mafiaTurn(Game game) {
-        Room room = gameContainer.room(Long.valueOf(game.getGameId()));
-        client.send(new SendMessage()
-                .setChatId(room.getRoomId())
-                .setText(MessageHolder.get("night.started.be.silent", room.getLang()))
-        );
-        room.getGame().mafias().stream()
-                .map(Player::getUserId)
-                .map(Long::valueOf)
-                .forEach(id ->
-                        client.send(new SendMessageWithInlineKeyboard()
-                                .setReplyMarkup(new TInlineKeyboardMarkup()
-                                        .addOptions(
-                                                room.getGame().alivePlayer().stream()
-                                                        .map(Player::getUserId)
-                                                        .map(Long::valueOf)
-                                                        .map(room::findPlayer)
-                                                        .map(Optional::get)
-                                                        .map(a -> new TInlineKeyboardButton().setText(a.fullName())
-                                                                .setCallbackData("kill " + String.valueOf(a.getTelegramUserId())))
-                                                        .collect(Collectors.toList())))
-                                .setText(MessageHolder.get("mafia.night.started", room.getLang()))
-                                .setChatId(id)
-                        ));
-    }
+	private void mafiaTurn(Game game) {
+		Room room = gameContainer.room(Long.valueOf(game.getGameId()));
+		client.send(new SendMessage()
+				.setChatId(room.getRoomId())
+				.setText(MessageHolder.get("night.started.be.silent", room.getLang()))
+		);
+		room.getGame().mafias().stream()
+				.map(Player::getUserId)
+				.map(Long::valueOf)
+				.forEach(id ->
+						client.send(new SendMessageWithInlineKeyboard()
+								.setReplyMarkup(new TInlineKeyboardMarkup()
+										.addOptions(
+												room.getGame().alivePlayer().stream()
+														.map(Player::getUserId)
+														.map(Long::valueOf)
+														.map(room::findPlayer)
+														.map(Optional::get)
+														.map(a -> new TInlineKeyboardButton().setText(a.fullName())
+																.setCallbackData("kill " + String.valueOf(a.getTelegramUserId())))
+														.collect(Collectors.toList())))
+								.setText(MessageHolder.get("mafia.night.started", room.getLang()))
+								.setChatId(id)
+						));
+	}
 
-    private void detectiveTurn(Game game) {
-        Room room = gameContainer.room(Long.valueOf(game.getGameId()));
-        Optional<Player> detectivePlayerOpt = game.detective();
-        detectivePlayerOpt.ifPresent(detective -> client.send(new SendMessageWithInlineKeyboard()
-                .setReplyMarkup(new TInlineKeyboardMarkup()
-                        .addOptions(room.getGame().alivePlayer().stream()
-                                .map(Player::getUserId)
-                                .map(Long::valueOf)
-                                .map(room::findPlayer)
-                                .map(Optional::get)
-                                .map(a -> new TInlineKeyboardButton().setText(a.fullName())
-                                        .setCallbackData("ask " + String.valueOf(a.getTelegramUserId())))
-                                .collect(Collectors.toList())))
-                .setChatId(Long.valueOf(detective.getUserId()))
-                .setText(MessageHolder.get("detective.night.started", room.getLang()))));
-    }
+	private void detectiveTurn(Game game) {
+		Room room = gameContainer.room(Long.valueOf(game.getGameId()));
+		Optional<Player> detectivePlayerOpt = game.detective();
+		detectivePlayerOpt.ifPresent(detective -> client.send(new SendMessageWithInlineKeyboard()
+				.setReplyMarkup(new TInlineKeyboardMarkup()
+						.addOptions(room.getGame().alivePlayer().stream()
+								.map(Player::getUserId)
+								.map(Long::valueOf)
+								.map(room::findPlayer)
+								.map(Optional::get)
+								.map(a -> new TInlineKeyboardButton().setText(a.fullName())
+										.setCallbackData("ask " + String.valueOf(a.getTelegramUserId())))
+								.collect(Collectors.toList())))
+				.setChatId(Long.valueOf(detective.getUserId()))
+				.setText(MessageHolder.get("detective.night.started", room.getLang()))));
+	}
 
-    private void doctorTurn(Game game) {
-        Room room = gameContainer.room(Long.valueOf(game.getGameId()));
-        Optional<Player> doctorPlayerOpt = game.doctor();
-        doctorPlayerOpt.ifPresent(doctor -> client.send(new SendMessageWithInlineKeyboard()
-                .setReplyMarkup(new TInlineKeyboardMarkup()
-                        .addOptions(room.getGame().alivePlayer().stream()
-                                .map(Player::getUserId)
-                                .map(Long::valueOf)
-                                .map(room::findPlayer)
-                                .map(Optional::get)
-                                .map(a -> new TInlineKeyboardButton().setText(a.fullName())
-                                        .setCallbackData("heal " + String.valueOf(a.getTelegramUserId())))
-                                .collect(Collectors.toList())))
-                .setChatId(Long.valueOf(doctor.getUserId()))
-                .setText(MessageHolder.get("doctor.night.started", room.getLang()))));
-    }
+	private void doctorTurn(Game game) {
+		Room room = gameContainer.room(Long.valueOf(game.getGameId()));
+		Optional<Player> doctorPlayerOpt = game.doctor();
+		doctorPlayerOpt.ifPresent(doctor -> client.send(new SendMessageWithInlineKeyboard()
+				.setReplyMarkup(new TInlineKeyboardMarkup()
+						.addOptions(room.getGame().alivePlayer().stream()
+								.map(Player::getUserId)
+								.map(Long::valueOf)
+								.map(room::findPlayer)
+								.map(Optional::get)
+								.map(a -> new TInlineKeyboardButton().setText(a.fullName())
+										.setCallbackData("heal " + String.valueOf(a.getTelegramUserId())))
+								.collect(Collectors.toList())))
+				.setChatId(Long.valueOf(doctor.getUserId()))
+				.setText(MessageHolder.get("doctor.night.started", room.getLang()))));
+	}
 
-    private void sunriseHandler(Game game, NightResult nightResult) {
-        Room room = gameContainer.room(Long.valueOf(game.getGameId()));
-        Player killedPlayer = nightResult.getKilledPlayer();
-        String text;
-        if (Player.NOBODY.equals(killedPlayer))
-            text = MessageHolder.get("nobody.was.killed.last.night", room.getLang());
-        else {
-            text = MessageHolder.get("user.was.killed.last.night", room.getLang(),
-                    room.findPlayer(Long.valueOf(killedPlayer.getUserId()))
-                            .orElseThrow(IllegalStateException::new).fullName());
-            gameContainer.removeUser(Long.valueOf(killedPlayer.getUserId()));
-        }
-        client.send(new SendMessage()
-                .setChatId(room.getRoomId())
-                .setText(text)
-        );
-    }
+	private void sunriseHandler(Game game, NightResult nightResult) {
+		Room room = gameContainer.room(Long.valueOf(game.getGameId()));
+		Player killedPlayer = nightResult.getKilledPlayer();
+		String text;
+		if (Player.NOBODY.equals(killedPlayer))
+			text = MessageHolder.get("nobody.was.killed.last.night", room.getLang());
+		else {
+			text = MessageHolder.get("user.was.killed.last.night", room.getLang(),
+					room.findPlayer(Long.valueOf(killedPlayer.getUserId()))
+							.orElseThrow(IllegalStateException::new).fullName());
+			gameContainer.removeUser(Long.valueOf(killedPlayer.getUserId()));
+		}
+		client.send(new SendMessage()
+				.setChatId(room.getRoomId())
+				.setText(text)
+		);
+	}
 
-    private void finishHandler(Game game, GameResult gameResult) {
-        Room room = gameContainer.room(Long.valueOf(game.getGameId()));
-        String text = gameResult == GameResult.MAFIAS_WIN ?
-                MessageHolder.get("mafia.win", room.getLang()) :
-                MessageHolder.get("citizens.win", room.getLang());
-        text += "\n";
-        Map<String, Role> roles = game.getGameSetup().getPlayers();
-        for (String k : roles.keySet()) {
-            Account ac = room.findPlayer(Long.valueOf(k)).orElseThrow(IllegalStateException::new);
-            Role role = roles.get(k);
-            text += MessageHolder.get(roleKey(role), room.getLang(), ac.fullName()) + "\n";
-            auditRepository.save(new Audit()
-                    .setRoomId(String.valueOf(room.getRoomId()))
-                    .setDate(new Date())
-                    .setActor(ac)
-                    .setAction(Action.GAME_OVER)
-            );
-        }
-        client.send(new SendMessage()
-                .setChatId(room.getRoomId())
-                .setText(text)
-        );
-        clearGame(game);
-        logger.info("game with id {} finished with result {}", game.getGameId(), gameResult);
-    }
+	private void finishHandler(Game game, GameResult gameResult) {
+		Room room = gameContainer.room(Long.valueOf(game.getGameId()));
+		String text = gameResult == GameResult.MAFIAS_WIN ?
+				MessageHolder.get("mafia.win", room.getLang()) :
+				MessageHolder.get("citizens.win", room.getLang());
+		text += "\n";
+		Map<String, Role> roles = game.getGameSetup().getPlayers();
+		for (String k : roles.keySet()) {
+			Account ac = room.findPlayer(Long.valueOf(k)).orElseThrow(IllegalStateException::new);
+			Role role = roles.get(k);
+			text += MessageHolder.get(roleKey(role), room.getLang(), ac.fullName()) + "\n";
+			auditRepository.save(new Audit()
+					.setRoomId(String.valueOf(room.getRoomId()))
+					.setDate(new Date())
+					.setActor(ac)
+					.setAction(Action.GAME_OVER)
+			);
+		}
+		client.send(new SendMessage()
+				.setChatId(room.getRoomId())
+				.setText(text)
+		);
+		clearGame(game);
+		logger.info("game with id {} finished with result {}", game.getGameId(), gameResult);
+	}
 
-    private void clearGame(Game game) {
-        game.getGameSetup().getPlayers().keySet().stream().map(Long::valueOf)
-                .forEach(gameContainer::removeUser);
-        gameContainer.removeRoom(Long.valueOf(game.getGameId()));
-    }
+	private void clearGame(Game game) {
+		game.getGameSetup().getPlayers().keySet().stream().map(Long::valueOf)
+				.forEach(gameContainer::removeUser);
+		gameContainer.removeRoom(Long.valueOf(game.getGameId()));
+	}
 }

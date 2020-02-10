@@ -27,6 +27,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface AccountRepository extends CrudRepository<Account, Long> {
-    Account findByTelegramUserId(Long telegramUserId);
+	Account findByTelegramUserId(Long telegramUserId);
 
 }

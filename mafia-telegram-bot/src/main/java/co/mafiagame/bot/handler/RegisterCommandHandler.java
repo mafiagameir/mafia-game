@@ -45,7 +45,7 @@ public class RegisterCommandHandler extends TelegramCommandHandler {
 	@Override
 	protected Collection<String> getCommandString() {
 		return Arrays.asList(Constants.Command.REGISTER,
-						MessageHolder.get("register", MessageHolder.Lang.FA));
+				MessageHolder.get("register", MessageHolder.Lang.FA));
 	}
 
 	@Override
@@ -75,12 +75,12 @@ public class RegisterCommandHandler extends TelegramCommandHandler {
 	private void register(TMessage message, Room room, Account account) {
 		boolean started = room.getGame().registerPlayer(String.valueOf(message.getFrom().getId()));
 		client.send(new SendMessageWithRemoveKeyboard()
-						.setReplyMarkup(new TReplyKeyboardRemove()
-										.setSelective(true))
-						.setReplyToMessageId(message.getId())
-						.setChatId(room.getRoomId())
-						.setText(MessageHolder.get("player.successfully.registered", room.getLang(),
-										accountCache.get(message.getFrom().getId()).fullName())));
+				.setReplyMarkup(new TReplyKeyboardRemove()
+						.setSelective(true))
+				.setReplyToMessageId(message.getId())
+				.setChatId(room.getRoomId())
+				.setText(MessageHolder.get("player.successfully.registered", room.getLang(),
+						accountCache.get(message.getFrom().getId()).fullName())));
 		gameContainer.putUserRoom(message.getFrom().getId(), message.getChat().getId());
 		room.getAccounts().add(account);
 		accountCache.put(account.getTelegramUserId(), account);
@@ -88,19 +88,19 @@ public class RegisterCommandHandler extends TelegramCommandHandler {
 			sendMessage(message, "game.started", room.getLang(), false);
 			room.getAccounts().forEach(a -> {
 				auditRepository.save(new Audit()
-								.setAction(Action.START_GAME)
-								.setActor(a)
-								.setDate(new Date())
-								.setRoomId(String.valueOf(room.getRoomId()))
+						.setAction(Action.START_GAME)
+						.setActor(a)
+						.setDate(new Date())
+						.setRoomId(String.valueOf(room.getRoomId()))
 				);
 				SendMessageResult result = client.send(new SendMessage()
-								.setChatId(a.getTelegramUserId())
-								.setText(roleMsg(room, a))
+						.setChatId(a.getTelegramUserId())
+						.setText(roleMsg(room, a))
 				);
 				if (!result.isOk() && result.getErrorCode() == 403) {
 					client.send(new SendMessage()
-									.setChatId(room.getRoomId())
-									.setText(MessageHolder.get("bot.has.not.access", room.getLang(), a.fullName())));
+							.setChatId(room.getRoomId())
+							.setText(MessageHolder.get("bot.has.not.access", room.getLang(), a.fullName())));
 				}
 			});
 
@@ -117,21 +117,21 @@ public class RegisterCommandHandler extends TelegramCommandHandler {
 				return MessageHolder.get("your.role.is.detective", room.getLang());
 			case MAFIA:
 				auditRepository.save(new Audit()
-								.setAction(Action.BE_MAFIA)
-								.setActor(a)
-								.setDate(new Date())
-								.setRoomId(String.valueOf(room.getRoomId()))
+						.setAction(Action.BE_MAFIA)
+						.setActor(a)
+						.setDate(new Date())
+						.setRoomId(String.valueOf(room.getRoomId()))
 				);
 				return MessageHolder.get("your.role.is.mafia", room.getLang()) + "\n" +
-								MessageHolder.get("mafia.are.players", room.getLang(),
-												room.getGame().mafias().stream()
-																.map(Player::getUserId)
-																.map(Long::valueOf)
-																.map(room::findPlayer)
-																.map(Optional::get)
-																.map(Account::fullName)
-																.collect(Collectors.joining(
-																				MessageHolder.get("and", room.getLang()))));
+						MessageHolder.get("mafia.are.players", room.getLang(),
+								room.getGame().mafias().stream()
+										.map(Player::getUserId)
+										.map(Long::valueOf)
+										.map(room::findPlayer)
+										.map(Optional::get)
+										.map(Account::fullName)
+										.collect(Collectors.joining(
+												MessageHolder.get("and", room.getLang()))));
 		}
 		return MessageHolder.get("your.dead", room.getLang());
 	}

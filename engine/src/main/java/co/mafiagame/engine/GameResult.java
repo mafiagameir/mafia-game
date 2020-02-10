@@ -22,5 +22,5 @@ package co.mafiagame.engine;
  * @author nazila
  */
 public enum GameResult {
-    MAFIAS_WIN, CITIZEN_WIN, UNKNOWN
+	MAFIAS_WIN, CITIZEN_WIN, UNKNOWN
 }

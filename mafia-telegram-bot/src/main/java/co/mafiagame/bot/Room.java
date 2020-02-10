@@ -31,52 +31,52 @@ import java.util.Optional;
  * @author Esa Hekmatizadeh
  */
 public class Room {
-    private Game game;
-    private MessageHolder.Lang lang;
-    private List<Account> accounts = new ArrayList<>();
-    private Long roomId;
+	private Game game;
+	private MessageHolder.Lang lang;
+	private List<Account> accounts = new ArrayList<>();
+	private Long roomId;
 
-    public Game getGame() {
-        return game;
-    }
+	public Game getGame() {
+		return game;
+	}
 
-    public Room setGame(Game game) {
-        this.game = game;
-        return this;
-    }
+	public Room setGame(Game game) {
+		this.game = game;
+		return this;
+	}
 
-    public MessageHolder.Lang getLang() {
-        return lang;
-    }
+	public MessageHolder.Lang getLang() {
+		return lang;
+	}
 
-    public Room setLang(MessageHolder.Lang lang) {
-        this.lang = lang;
-        return this;
-    }
+	public Room setLang(MessageHolder.Lang lang) {
+		this.lang = lang;
+		return this;
+	}
 
-    public List<Account> getAccounts() {
-        return accounts;
-    }
+	public List<Account> getAccounts() {
+		return accounts;
+	}
 
-    public Room setAccounts(List<Account> accounts) {
-        this.accounts = accounts;
-        return this;
-    }
+	public Room setAccounts(List<Account> accounts) {
+		this.accounts = accounts;
+		return this;
+	}
 
-    public Optional<Account> findPlayer(Long userId) {
-        return accounts.stream().filter(a -> Objects.equals(a.getTelegramUserId(), userId)).findAny();
-    }
+	public Optional<Account> findPlayer(Long userId) {
+		return accounts.stream().filter(a -> Objects.equals(a.getTelegramUserId(), userId)).findAny();
+	}
 
-    public Optional<Account> findPlayer(String fullName) {
-        return accounts.stream().filter(a -> a.fullName().trim().equals(fullName.trim())).findAny();
-    }
+	public Optional<Account> findPlayer(String fullName) {
+		return accounts.stream().filter(a -> a.fullName().trim().equals(fullName.trim())).findAny();
+	}
 
-    public Long getRoomId() {
-        return roomId;
-    }
+	public Long getRoomId() {
+		return roomId;
+	}
 
-    public Room setRoomId(Long roomId) {
-        this.roomId = roomId;
-        return this;
-    }
+	public Room setRoomId(Long roomId) {
+		this.roomId = roomId;
+		return this;
+	}
 }

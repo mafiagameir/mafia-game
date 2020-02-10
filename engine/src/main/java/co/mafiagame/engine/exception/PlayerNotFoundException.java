@@ -22,19 +22,19 @@ package co.mafiagame.engine.exception;
  * @author hekmatof
  */
 public class PlayerNotFoundException extends MafiaException {
-    private final String userId;
+	private final String userId;
 
-    public PlayerNotFoundException(String userId) {
-        this.userId = userId;
-    }
+	public PlayerNotFoundException(String userId) {
+		this.userId = userId;
+	}
 
-    @Override
-    public String getMessageCode() {
-        return "player.not.found";
-    }
+	@Override
+	public String getMessageCode() {
+		return "player.not.found";
+	}
 
-    @Override
-    public String[] getMessageArgs() {
-        return new String[]{userId};
-    }
+	@Override
+	public String[] getMessageArgs() {
+		return new String[] {userId};
+	}
 }

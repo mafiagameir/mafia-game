@@ -22,13 +22,13 @@ package co.mafiagame.engine.exception;
  * @author Esa Hekmatizadeh
  */
 public class NoElectionStartedException extends MafiaException {
-    @Override
-    public String getMessageCode() {
-        return "no.election.started";
-    }
+	@Override
+	public String getMessageCode() {
+		return "no.election.started";
+	}
 
-    @Override
-    public String[] getMessageArgs() {
-        return new String[0];
-    }
+	@Override
+	public String[] getMessageArgs() {
+		return new String[0];
+	}
 }
