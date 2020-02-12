@@ -47,12 +47,16 @@ public final class BotConfiguration {
 	private static final Logger logger = LoggerFactory.getLogger(BotConfiguration.class);
 
 	private Configuration configuration;
+	private final TelegramClient client;
+	private final GameContainer gameContainer;
+	private final AuditRepository auditRepository;
+
 	@Autowired
-	private TelegramClient client;
-	@Autowired
-	private GameContainer gameContainer;
-	@Autowired
-	private AuditRepository auditRepository;
+	public BotConfiguration(TelegramClient client, GameContainer gameContainer, AuditRepository auditRepository) {
+		this.client = client;
+		this.gameContainer = gameContainer;
+		this.auditRepository = auditRepository;
+	}
 
 	private static String roleKey(Role role) {
 		switch (role) {

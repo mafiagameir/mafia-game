@@ -43,8 +43,12 @@ public class GameContainer {
 	private final Map<Long, Long> userRooms = new HashMap<>(); //userId -> roomId
 	private final Map<Long, Room> rooms = new HashMap<>(); //roomId-> Room
 	private ScheduledExecutorService sExecutorService = new ScheduledThreadPoolExecutor(1);
+	private final AuditRepository auditRepository;
+
 	@Autowired
-	private AuditRepository auditRepository;
+	public GameContainer(AuditRepository auditRepository) {
+		this.auditRepository = auditRepository;
+	}
 
 	@PostConstruct
 	private void init() {

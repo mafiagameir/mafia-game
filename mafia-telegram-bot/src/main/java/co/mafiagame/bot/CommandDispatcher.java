@@ -94,7 +94,7 @@ public class CommandDispatcher {
 		if (message.isNotCommand())
 			return;
 		String command = getCommand(message.getText()).orElse(Constants.Command.START_STASHED_GAME);
-		TelegramCommandHandler handler = commandHandlers.get(command.toLowerCase());
+		TelegramCommandHandler handler = commandHandlers.get(command);
 		executorService.submit(() -> {
 			try {
 				handler.execute(message);

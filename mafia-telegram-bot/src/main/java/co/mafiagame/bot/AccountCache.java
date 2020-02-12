@@ -35,12 +35,16 @@ import java.util.Objects;
  */
 @Component
 public class AccountCache {
-	@Autowired
-	private CacheManager cacheManager;
-	@Autowired
-	private AccountRepository accountRepository;
+	private final CacheManager cacheManager;
+	private final AccountRepository accountRepository;
 
 	private Cache<Long, Account> accountCache;
+
+	@Autowired
+	public AccountCache(CacheManager cacheManager, AccountRepository accountRepository) {
+		this.cacheManager = cacheManager;
+		this.accountRepository = accountRepository;
+	}
 
 
 	@PostConstruct

@@ -50,6 +50,7 @@ public class CommandController {
 	private String telegramUrl;
 	private final CommandDispatcher commandDispatcher;
 	private final RestTemplate restTemplate;
+	private volatile long offset = 1;
 
 	@Autowired
 	public CommandController(CommandDispatcher commandDispatcher, RestTemplate restTemplate) {
@@ -61,32 +62,22 @@ public class CommandController {
 	@ConditionalOnProperty(prefix = "mafia.telegram.use.webhook", value = "false")
 	@Scheduled(fixedDelay = 200)
 	public void init() {
-		ScheduledExecutorService executorService = new ScheduledThreadPoolExecutor(1);
-		executorService.scheduleWithFixedDelay(() -> {
-			try {
-				long offset = 1;
-				Thread.sleep(TimeUnit.SECONDS.toMillis(5));
-				while (!Thread.currentThread().isInterrupted()) {
-					try {
-						TResult tResult = restTemplate.getForObject(
-								telegramUrl + telegramToken + "/getUpdates?offset=" + String.valueOf(offset + 1),
-								TResult.class);
-						for (TUpdate update : tResult.getResult()) {
-							if (offset < update.getId()) {
-								offset = update.getId();
-								handleMessage(update);
-								logger.debug("offset set to {}", offset);
-							}
-						}
-						Thread.sleep(200);
-					} catch (Exception e) {
-						logger.error(e.getMessage(), e);
-					}
+		try {
+			TResult tResult = restTemplate.getForObject(
+					telegramUrl + telegramToken + "/getUpdates?offset=" + String.valueOf(offset + 1),
+					TResult.class);
+			if (Objects.isNull(tResult))
+				return;
+			tResult.getResult().forEach((update) -> {
+				if (offset < update.getId()) {
+					offset = update.getId();
+					handleMessage(update);
+					logger.debug("offset set to {}", offset);
 				}
-			} catch (InterruptedException e) {
-				logger.error("main loop interupted ", e);
-			}
-		}, 500, 200, TimeUnit.MILLISECONDS);
+			});
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
 	}
 
 	@PostMapping("/{token}/update")

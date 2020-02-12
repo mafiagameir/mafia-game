@@ -41,9 +41,13 @@ public class TelegramClient {
 	private String telegramUrl;
 	@Value("${mafia.telegram.token}")
 	private String telegramToken;
-	@Autowired
-	private RestTemplate restTemplate;
+	private final RestTemplate restTemplate;
 	private ObjectMapper mapper;
+
+	@Autowired
+	public TelegramClient(RestTemplate restTemplate) {
+		this.restTemplate = restTemplate;
+	}
 
 	public SendMessageResult send(SendMessage message) {
 		try {
