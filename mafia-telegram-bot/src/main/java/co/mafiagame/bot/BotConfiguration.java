@@ -107,7 +107,7 @@ public final class BotConfiguration {
 														.map(room::findPlayer)
 														.map(Optional::get)
 														.map(a -> new TInlineKeyboardButton().setText(a.fullName())
-																.setCallbackData("kill " + String.valueOf(a.getTelegramUserId())))
+																.setCallbackData("kill " + a.getTelegramUserId()))
 														.collect(Collectors.toList())))
 								.setText(MessageHolder.get("mafia.night.started", room.getLang()))
 								.setChatId(id)
@@ -125,7 +125,7 @@ public final class BotConfiguration {
 								.map(room::findPlayer)
 								.map(Optional::get)
 								.map(a -> new TInlineKeyboardButton().setText(a.fullName())
-										.setCallbackData("ask " + String.valueOf(a.getTelegramUserId())))
+										.setCallbackData("ask " + a.getTelegramUserId()))
 								.collect(Collectors.toList())))
 				.setChatId(Long.valueOf(detective.getUserId()))
 				.setText(MessageHolder.get("detective.night.started", room.getLang()))));
@@ -142,7 +142,7 @@ public final class BotConfiguration {
 								.map(room::findPlayer)
 								.map(Optional::get)
 								.map(a -> new TInlineKeyboardButton().setText(a.fullName())
-										.setCallbackData("heal " + String.valueOf(a.getTelegramUserId())))
+										.setCallbackData("heal " + a.getTelegramUserId()))
 								.collect(Collectors.toList())))
 				.setChatId(Long.valueOf(doctor.getUserId()))
 				.setText(MessageHolder.get("doctor.night.started", room.getLang()))));
@@ -168,15 +168,15 @@ public final class BotConfiguration {
 
 	private void finishHandler(Game game, GameResult gameResult) {
 		Room room = gameContainer.room(Long.valueOf(game.getGameId()));
-		String text = gameResult == GameResult.MAFIAS_WIN ?
+		StringBuilder text = new StringBuilder(gameResult == GameResult.MAFIAS_WIN ?
 				MessageHolder.get("mafia.win", room.getLang()) :
-				MessageHolder.get("citizens.win", room.getLang());
-		text += "\n";
+				MessageHolder.get("citizens.win", room.getLang()));
+		text.append("\n");
 		Map<String, Role> roles = game.getGameSetup().getPlayers();
 		for (String k : roles.keySet()) {
 			Account ac = room.findPlayer(Long.valueOf(k)).orElseThrow(IllegalStateException::new);
 			Role role = roles.get(k);
-			text += MessageHolder.get(roleKey(role), room.getLang(), ac.fullName()) + "\n";
+			text.append(MessageHolder.get(roleKey(role), room.getLang(), ac.fullName())).append("\n");
 			auditRepository.save(new Audit()
 					.setRoomId(String.valueOf(room.getRoomId()))
 					.setDate(new Date())
@@ -186,7 +186,7 @@ public final class BotConfiguration {
 		}
 		client.send(new SendMessage()
 				.setChatId(room.getRoomId())
-				.setText(text)
+				.setText(text.toString())
 		);
 		clearGame(game);
 		logger.info("game with id {} finished with result {}", game.getGameId(), gameResult);

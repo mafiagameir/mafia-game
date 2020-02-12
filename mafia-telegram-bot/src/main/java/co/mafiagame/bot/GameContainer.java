@@ -29,6 +29,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -40,8 +41,8 @@ import java.util.stream.Collectors;
 @Component
 public class GameContainer {
 	private static final Logger log = LoggerFactory.getLogger(GameContainer.class);
-	private final Map<Long, Long> userRooms = new HashMap<>(); //userId -> roomId
-	private final Map<Long, Room> rooms = new HashMap<>(); //roomId-> Room
+	private final Map<Long, Long> userRooms = new ConcurrentHashMap<>(); //userId -> roomId
+	private final Map<Long, Room> rooms = new ConcurrentHashMap<>(); //roomId-> Room
 	private ScheduledExecutorService sExecutorService = new ScheduledThreadPoolExecutor(1);
 	private final AuditRepository auditRepository;
 
